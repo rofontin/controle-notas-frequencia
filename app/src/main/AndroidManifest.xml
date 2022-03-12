@@ -11,9 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
+            android:label="@string/professores"
             android:name=".cadastroprofessor.ListaProfessorActivity"
             android:exported="false" />
         <activity
+            android:label="@string/cadastroProfessor"
             android:name=".cadastroprofessor.CadastroProfessorActivity"
             android:exported="false" />
         <activity

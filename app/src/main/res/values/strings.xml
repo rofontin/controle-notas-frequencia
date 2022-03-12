@@ -21,4 +21,6 @@
     <string name="turma">Turma</string>
     <string name="disciplina">Disciplina</string>
     <string name="selecioneDisciplina">Selecione Disciplina</string>
+    <string name="professores">Professores</string>
+    <string name="cadastroProfessor">Cadastro Professor</string>
 </resources>
