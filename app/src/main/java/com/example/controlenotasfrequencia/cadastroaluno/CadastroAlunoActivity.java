@@ -52,7 +52,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         edCpfAluno = findViewById(R.id.edCpfAluno);
         edDtNascAluno = findViewById(R.id.edDtNascAluno);
         edDtMatAluno = findViewById(R.id.edDtMatAluno);
-        lnPrincipal = findViewById(R.id.lnPrincipal);
+        lnPrincipal = findViewById(R.id.lnPrincipalAluno);
 
         edDtNascAluno.setFocusable(false);
         edDtMatAluno.setFocusable(false);

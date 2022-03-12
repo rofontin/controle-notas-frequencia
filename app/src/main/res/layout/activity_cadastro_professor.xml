@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/lnPrincipalAluno"
-    tools:context=".cadastroaluno.CadastroAlunoActivity">
+    android:id="@+id/lnPrincipalProfessor"
+    tools:context=".cadastroprofessor.CadastroProfessorActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="@string/ra">
+        android:hint="@string/registro">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edRaAluno"
+            android:id="@+id/edRegistro"
             android:inputType="number"
             android:backgroundTint="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -28,7 +28,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edNomeAluno"
+            android:id="@+id/edNomeProfessor"
             android:backgroundTint="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -39,7 +39,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edCpfAluno"
+            android:id="@+id/edCpfProfessor"
             android:inputType="number"
             android:backgroundTint="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +58,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edDtNascAluno"
+                android:id="@+id/edDtNascProfessor"
                 android:backgroundTint="@color/white"
                 android:onClick="selecionarData"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,11 +67,11 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="@string/dtMatricula">
+            android:hint="@string/dtAdesao">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edDtMatAluno"
+                android:id="@+id/edDtAdesaoProfessor"
                 android:onClick="selecionarData"
                 android:backgroundTint="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -81,20 +81,20 @@
     <fr.ganfra.materialspinner.MaterialSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spCursos"
+        android:id="@+id/spTurma"
+        app:ms_hint="@string/selecioneTurma"
         app:ms_arrowColor="?attr/colorPrimary"
-        app:ms_floatingLabelText="@string/cursos"
-        app:ms_hint="@string/selecioneCurso"
+        app:ms_floatingLabelText="@string/turma"
         app:ms_multiline="false"
         android:layout_margin="10dp"/>
 
     <fr.ganfra.materialspinner.MaterialSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spPeriodo"
+        android:id="@+id/spDisciplina"
         app:ms_arrowColor="?attr/colorPrimary"
-        app:ms_floatingLabelText="@string/periodo"
-        app:ms_hint="@string/selecionePeriodo"
+        app:ms_floatingLabelText="@string/disciplina"
+        app:ms_hint="@string/selecioneDisciplina"
         app:ms_multiline="false"
         android:layout_margin="10dp"/>
 

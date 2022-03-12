@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cadastroaluno.ListaAlunoActivity"
+    tools:context=".cadastroprofessor.ListaProfessorActivity"
     android:orientation="vertical"
-    android:id="@+id/lnListaAluno">
+    android:id="@+id/lnListaProfessor">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:id="@+id/rvListaAluno"/>
+        android:id="@+id/rvListaProfessor"/>
 
 </LinearLayout>

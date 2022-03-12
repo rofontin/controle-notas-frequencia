@@ -19,4 +19,12 @@
     <string name="nomeDisciplina">Nome Disciplina</string>
     <string name="cargaHoraria">Carga Horária</string>
     <string name="cadastroDisciplina">Cadastro Disciplina</string>
+    <string name="registro">Registro</string>
+    <string name="dtAdesao">Data Adesão</string>
+    <string name="selecioneTurma">Selecione Turma</string>
+    <string name="turma">Turma</string>
+    <string name="disciplina">Disciplina</string>
+    <string name="selecioneDisciplina">Selecione Disciplina</string>
+    <string name="professores">Professores</string>
+    <string name="cadastroProfessor">Cadastro Professor</string>
 </resources>

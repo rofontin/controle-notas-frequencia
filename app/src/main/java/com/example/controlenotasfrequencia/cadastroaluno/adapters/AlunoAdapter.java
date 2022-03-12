@@ -76,6 +76,4 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
     public int getItemCount() {
         return listaAlunos.size();
     }
-
-
 }

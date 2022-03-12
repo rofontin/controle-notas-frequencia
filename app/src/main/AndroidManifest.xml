@@ -18,6 +18,14 @@
             android:exported="false"
             android:label="@string/cadastroDisciplina" />
         <activity
+            android:label="@string/professores"
+            android:name=".cadastroprofessor.ListaProfessorActivity"
+            android:exported="false" />
+        <activity
+            android:label="@string/cadastroProfessor"
+            android:name=".cadastroprofessor.CadastroProfessorActivity"
+            android:exported="false" />
+        <activity
             android:name=".cadastroaluno.ListaAlunoActivity"
             android:exported="false"
             android:label="@string/alunos" />
