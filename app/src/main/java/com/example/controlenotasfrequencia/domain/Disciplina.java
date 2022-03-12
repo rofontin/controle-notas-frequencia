@@ -9,11 +9,21 @@ public class Disciplina extends SugarRecord {
     private int codigo;
     private String nome;
     private String cargaHoraria;
+    private String professor;
 
-    public Disciplina(int codigo, String nome, String cargaHoraria) {
+    public Disciplina(int codigo, String nome, String cargaHoraria, String professor) {
         this.codigo = codigo;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
+        this.professor = professor;
+    }
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
     }
 
     public Disciplina() {
