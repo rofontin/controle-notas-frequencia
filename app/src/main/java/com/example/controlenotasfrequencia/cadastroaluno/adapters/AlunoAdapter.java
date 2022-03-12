@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.controlenotasfrequencia.R;
-import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;

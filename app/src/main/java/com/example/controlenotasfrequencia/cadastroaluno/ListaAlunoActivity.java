@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroaluno.adapters.AlunoAdapter;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
-import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
-import com.example.controlenotasfrequencia.cadastroaluno.util.Util;
+import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,4 +15,8 @@
     <string name="addAluno">Adicionar Aluno</string>
     <string name="cadastroAluno">Cadastro Aluno</string>
     <string name="alunos">Alunos</string>
+    <string name="codigoDisciplina">Codigo Disciplina</string>
+    <string name="nomeDisciplina">Nome Disciplina</string>
+    <string name="cargaHoraria">Carga Horária</string>
+    <string name="cadastroDisciplina">Cadastro Disciplina</string>
 </resources>

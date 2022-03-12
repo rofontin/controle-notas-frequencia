@@ -11,16 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
-            android:label="@string/alunos"
-            android:name="com.example.controlenotasfrequencia.cadastroaluno.ListaAlunoActivity"
-            android:exported="false" />
-
-        <activity
-            android:label="@string/cadastroAluno"
-            android:name="com.example.controlenotasfrequencia.cadastroaluno.CadastroAlunoActivity"
+            android:name=".cadastrodisciplina.ListaDisciplinaActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.controlenotasfrequencia.MainActivity"
+            android:name=".cadastrodisciplina.CadastroDisciplinaActivity"
+            android:exported="false"
+            android:label="@string/cadastroDisciplina" />
+        <activity
+            android:name=".cadastroaluno.ListaAlunoActivity"
+            android:exported="false"
+            android:label="@string/alunos" />
+        <activity
+            android:name=".cadastroaluno.CadastroAlunoActivity"
+            android:exported="false"
+            android:label="@string/cadastroAluno" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,16 +34,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.example.controlenotasfrequencia.model" />
-
+            android:value="com.example.controlenotasfrequencia.domain" />
         <meta-data
             android:name="DATABASE"
-            android:value="cadastro_aluno.db" />
+            android:value="controle_notas_frequencia.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />
