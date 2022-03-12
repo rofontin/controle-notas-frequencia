@@ -1,4 +1,4 @@
-package com.example.cadastroalunos;
+package com.example.controlenotasfrequencia;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,10 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-import com.example.cadastroalunos.adapters.AlunoAdapter;
-import com.example.cadastroalunos.dao.AlunoDAO;
-import com.example.cadastroalunos.model.Aluno;
-import com.example.cadastroalunos.util.Util;
+import com.example.controlenotasfrequencia.adapters.AlunoAdapter;
+import com.example.controlenotasfrequencia.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.model.Aluno;
+import com.example.controlenotasfrequencia.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;

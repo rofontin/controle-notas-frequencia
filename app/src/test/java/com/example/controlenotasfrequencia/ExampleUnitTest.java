@@ -1,4 +1,4 @@
-package com.example.cadastroalunos;
+package com.example.controlenotasfrequencia;
 
 import org.junit.Test;
 

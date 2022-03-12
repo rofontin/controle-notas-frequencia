@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CadastroAlunos</string>
+    <string name="app_name">Controle Notas e Frequência</string>
     <string name="ra">Ra</string>
     <string name="nome">Nome</string>
     <string name="cpf">CPF</string>
@@ -13,4 +13,6 @@
     <string name="salvar">Salvar</string>
     <string name="curso">Curso</string>
     <string name="addAluno">Adicionar Aluno</string>
+    <string name="cadastroAluno">Cadastro Aluno</string>
+    <string name="alunos">Alunos</string>
 </resources>

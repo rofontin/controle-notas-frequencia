@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cadastroalunos">
+    package="com.example.controlenotasfrequencia">
 
     <application
         android:name="com.orm.SugarApp"
@@ -11,14 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
-            android:name=".ListaAlunoActivity"
+            android:label="@string/alunos"
+            android:name="com.example.controlenotasfrequencia.ListaAlunoActivity"
             android:exported="false" />
 
         <activity
-            android:name=".CadastroAlunoActivity"
+            android:label="@string/cadastroAluno"
+            android:name="com.example.controlenotasfrequencia.CadastroAlunoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.controlenotasfrequencia.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +33,7 @@
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.example.cadastroalunos.model" />
+            android:value="com.example.controlenotasfrequencia.model" />
 
         <meta-data
             android:name="DATABASE"

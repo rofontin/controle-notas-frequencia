@@ -1,12 +1,12 @@
-package com.example.cadastroalunos.adapters;
+package com.example.controlenotasfrequencia.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cadastroalunos.R;
-import com.example.cadastroalunos.model.Aluno;
+import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.model.Aluno;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;

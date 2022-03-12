@@ -1,13 +1,10 @@
-package com.example.cadastroalunos;
+package com.example.controlenotasfrequencia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-import com.example.cadastroalunos.dao.AlunoDAO;
-import com.example.cadastroalunos.model.Aluno;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,10 +1,9 @@
-package com.example.cadastroalunos.dao;
+package com.example.controlenotasfrequencia.dao;
 
 import android.util.Log;
 
-import com.example.cadastroalunos.model.Aluno;
+import com.example.controlenotasfrequencia.model.Aluno;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

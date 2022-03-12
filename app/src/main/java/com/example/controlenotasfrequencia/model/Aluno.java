@@ -1,4 +1,4 @@
-package com.example.cadastroalunos.model;
+package com.example.controlenotasfrequencia.model;
 
 import com.orm.SugarRecord;
 

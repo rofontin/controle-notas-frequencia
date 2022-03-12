@@ -1,10 +1,9 @@
-package com.example.cadastroalunos.util;
+package com.example.controlenotasfrequencia.util;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.cadastroalunos.R;
+import com.example.controlenotasfrequencia.R;
 import com.google.android.material.snackbar.Snackbar;
 
 public class Util {

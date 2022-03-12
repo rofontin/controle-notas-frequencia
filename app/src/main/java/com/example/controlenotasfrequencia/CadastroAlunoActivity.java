@@ -1,29 +1,26 @@
-package com.example.cadastroalunos;
+package com.example.controlenotasfrequencia;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
+
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.PrecomputedText;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.example.cadastroalunos.dao.AlunoDAO;
-import com.example.cadastroalunos.model.Aluno;
-import com.example.cadastroalunos.util.CpfMask;
-import com.example.cadastroalunos.util.Util;
+import com.example.controlenotasfrequencia.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.model.Aluno;
+import com.example.controlenotasfrequencia.util.CpfMask;
+import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
