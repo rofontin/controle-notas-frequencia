@@ -1,4 +1,4 @@
-package com.example.controlenotasfrequencia.cadastroaluno.model;
+package com.example.controlenotasfrequencia.domain;
 
 import com.orm.SugarRecord;
 

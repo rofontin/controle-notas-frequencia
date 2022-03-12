@@ -19,9 +19,9 @@ import android.widget.LinearLayout;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
-import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
-import com.example.controlenotasfrequencia.cadastroaluno.util.CpfMask;
-import com.example.controlenotasfrequencia.cadastroaluno.util.Util;
+import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.util.CpfMask;
+import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -52,7 +52,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         edCpfAluno = findViewById(R.id.edCpfAluno);
         edDtNascAluno = findViewById(R.id.edDtNascAluno);
         edDtMatAluno = findViewById(R.id.edDtMatAluno);
-        lnPrincipal = findViewById(R.id.lnPrincipal);
+        lnPrincipal = findViewById(R.id.lnPrincipalAluno);
 
         edDtNascAluno.setFocusable(false);
         edDtMatAluno.setFocusable(false);

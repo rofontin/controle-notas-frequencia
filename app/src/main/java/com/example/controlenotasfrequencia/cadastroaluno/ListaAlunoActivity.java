@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroaluno.adapters.AlunoAdapter;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
-import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
-import com.example.controlenotasfrequencia.cadastroaluno.util.Util;
+import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_aluno);
 
-        lnLista = findViewById(R.id.lnLista);
+        lnLista = findViewById(R.id.lnListaAluno);
 
         atualizaListaAluno();
     }
@@ -43,7 +43,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
         listaAluno = AlunoDAO.retornaAlunos("", new String[]{}, "nome asc");
         Log.e("PHS", "Tamanho da lista: "+listaAluno.size());
 
-        rvListaAlunos = findViewById(R.id.rvListaAlunos);
+        rvListaAlunos = findViewById(R.id.rvListaAluno);
         AlunoAdapter adapter = new AlunoAdapter(listaAluno, this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaAlunos.setLayoutManager(llm);

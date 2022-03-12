@@ -15,4 +15,10 @@
     <string name="addAluno">Adicionar Aluno</string>
     <string name="cadastroAluno">Cadastro Aluno</string>
     <string name="alunos">Alunos</string>
+    <string name="registro">Registro</string>
+    <string name="dtAdesao">Data Adesão</string>
+    <string name="selecioneTurma">Selecione Turma</string>
+    <string name="turma">Turma</string>
+    <string name="disciplina">Disciplina</string>
+    <string name="selecioneDisciplina">Selecione Disciplina</string>
 </resources>
