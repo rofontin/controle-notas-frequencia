@@ -54,7 +54,7 @@
             android:value="controle_notas_frequencia.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="2" />
     </application>
 
 </manifest>

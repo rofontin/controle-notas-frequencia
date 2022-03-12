@@ -96,4 +96,9 @@ public class Professor extends SugarRecord {
     public int hashCode() {
         return Objects.hash(registro);
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

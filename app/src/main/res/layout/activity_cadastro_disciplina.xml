@@ -47,4 +47,14 @@
             android:backgroundTint="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spProfessor"
+        app:ms_arrowColor="?attr/colorPrimary"
+        app:ms_floatingLabelText="@string/selecioneProfessor"
+        app:ms_hint="@string/selecioneProfessor"
+        app:ms_multiline="false"
+        android:layout_margin="10dp"/>
+
 </LinearLayout>

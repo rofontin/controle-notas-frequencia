@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
-import com.example.controlenotasfrequencia.cadastroaluno.adapters.AlunoAdapter;
-import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -18,9 +16,11 @@ import java.util.List;
 
 public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.DisciplinaViewHolder> {
 
+    private List<Disciplina> listaDisciplina;
     private Context context;
 
     public DisciplinaAdapter(List<Disciplina> listaDisciplina, Context context){
+        this.listaDisciplina = listaDisciplina;
         this.context = context;
     }
 
@@ -53,10 +53,15 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
 
     @Override
     public void onBindViewHolder(@NonNull DisciplinaViewHolder holder, int position) {
+        Disciplina disciplina = listaDisciplina.get(position);
+
+        holder.edCargaHoraria.setText(disciplina.getCargaHoraria().toString());
+        holder.edCodigoDiscilplina.setText(String.valueOf(disciplina.getCodigo()));
+        holder.edNomeDisciplina.setText(disciplina.getNome().toString());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listaDisciplina.size();
     }
 }

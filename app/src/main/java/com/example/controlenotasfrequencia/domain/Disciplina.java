@@ -6,16 +6,14 @@ import java.util.Objects;
 
 public class Disciplina extends SugarRecord {
 
-    private int codigoDisciplina;
-    private String nomeDisciplina;
+    private int codigo;
+    private String nome;
     private String cargaHoraria;
 
-    public Disciplina(int codigoDisciplina, String nomeDisciplina, String cargaHoraria) {
-        this.codigoDisciplina = codigoDisciplina;
-        this.nomeDisciplina = nomeDisciplina;
+    public Disciplina(int codigo, String nome, String cargaHoraria) {
+        this.codigo = codigo;
+        this.nome = nome;
         this.cargaHoraria = cargaHoraria;
-
-
     }
 
     public Disciplina() {
@@ -26,28 +24,28 @@ public class Disciplina extends SugarRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Disciplina that = (Disciplina) o;
-        return codigoDisciplina == that.codigoDisciplina && Objects.equals(nomeDisciplina, that.nomeDisciplina) && Objects.equals(cargaHoraria, that.cargaHoraria);
+        return codigo == that.codigo && Objects.equals(nome, that.nome) && Objects.equals(cargaHoraria, that.cargaHoraria);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigoDisciplina, nomeDisciplina, cargaHoraria);
+        return Objects.hash(codigo, nome, cargaHoraria);
     }
 
-    public int getCodigoDisciplina() {
-        return codigoDisciplina;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setCodigoDisciplina(int codigoDisciplina) {
-        this.codigoDisciplina = codigoDisciplina;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
-    public String getNomeDisciplina() {
-        return nomeDisciplina;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeDisciplina(String nomeDisciplina) {
-        this.nomeDisciplina = nomeDisciplina;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCargaHoraria() {

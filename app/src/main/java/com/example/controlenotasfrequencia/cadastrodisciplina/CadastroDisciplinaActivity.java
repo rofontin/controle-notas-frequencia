@@ -7,13 +7,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.util.Util;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.List;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class CadastroDisciplinaActivity extends AppCompatActivity {
 
@@ -21,7 +30,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     private TextInputEditText edNomeDisciplina;
     private TextInputEditText edCargaHoraria;
     private LinearLayout lnDisciplina;
-    private LinearLayout lnMenu;
+    private MaterialSpinner spProfessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,42 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         edNomeDisciplina = findViewById(R.id.edNomeDisciplina);
         edCargaHoraria = findViewById(R.id.edCargaHoraria);
         lnDisciplina = findViewById(R.id.lnDisciplina);
+
+        iniciaSpinners();
+
+
+    }
+    private void iniciaSpinners(){
+        spProfessor= findViewById(R.id.spProfessor);
+
+        List<Professor> professores = ProfessorDAO.retornaProfessores("", new String[]{}, "nome");
+
+        ArrayAdapter adapterProfessores = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1,  professores);
+
+        spProfessor.setAdapter(adapterProfessores);
+
+        //Ação ao selecionar o item da lista
+        spProfessor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0){
+
+                    /*Button btADS = new Button(getBaseContext());
+                    btADS.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                             LinearLayout.LayoutParams.WRAP_CONTENT));
+                    btADS.setText("Botao ADS");
+                    btADS.setBackgroundColor(getColor(R.color.teal_200));
+
+                    llPrincipal.addView(btADS);*/
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
     }
@@ -61,8 +106,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     }
     public void salvarDisciplina(){
         Disciplina disciplina = new Disciplina();
-        disciplina.setCodigoDisciplina(Integer.parseInt(edCodigoDisciplina.getText().toString()));
-        disciplina.setNomeDisciplina(edNomeDisciplina.getText().toString());
+        disciplina.setCodigo(Integer.parseInt(edCodigoDisciplina.getText().toString()));
+        disciplina.setNome(edNomeDisciplina.getText().toString());
         disciplina.setCargaHoraria(edCargaHoraria.getText().toString());
 
         if(DisciplinaDAO.salvar(disciplina) > 0) {
@@ -70,7 +115,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         }else
-            Util.customSnackBar(lnDisciplina, "erro ao salvar a disciplina ("+disciplina.getNomeDisciplina()+") " +
+            Util.customSnackBar(lnDisciplina, "erro ao salvar a disciplina ("+disciplina.getNome()+") " +
                     "verifique o log", 0);
 
 
