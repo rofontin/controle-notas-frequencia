@@ -12,12 +12,12 @@
         android:theme="@style/Theme.CadastroAlunos">
         <activity
             android:label="@string/alunos"
-            android:name="com.example.controlenotasfrequencia.ListaAlunoActivity"
+            android:name="com.example.controlenotasfrequencia.cadastroaluno.ListaAlunoActivity"
             android:exported="false" />
 
         <activity
             android:label="@string/cadastroAluno"
-            android:name="com.example.controlenotasfrequencia.CadastroAlunoActivity"
+            android:name="com.example.controlenotasfrequencia.cadastroaluno.CadastroAlunoActivity"
             android:exported="false" />
         <activity
             android:name="com.example.controlenotasfrequencia.MainActivity"

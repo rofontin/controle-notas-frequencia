@@ -1,4 +1,4 @@
-package com.example.controlenotasfrequencia.util;
+package com.example.controlenotasfrequencia.cadastroaluno.util;
 
 import android.text.Editable;
 import android.text.TextWatcher;

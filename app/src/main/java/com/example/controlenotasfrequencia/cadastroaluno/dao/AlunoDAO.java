@@ -1,8 +1,8 @@
-package com.example.controlenotasfrequencia.dao;
+package com.example.controlenotasfrequencia.cadastroaluno.dao;
 
 import android.util.Log;
 
-import com.example.controlenotasfrequencia.model.Aluno;
+import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
 
 import java.util.ArrayList;
 import java.util.List;

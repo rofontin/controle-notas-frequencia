@@ -1,4 +1,4 @@
-package com.example.controlenotasfrequencia.util;
+package com.example.controlenotasfrequencia.cadastroaluno.util;
 
 import android.view.View;
 import android.widget.TextView;

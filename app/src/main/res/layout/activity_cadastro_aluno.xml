@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/lnPrincipal"
-    tools:context=".CadastroAlunoActivity">
+    tools:context=".cadastroaluno.CadastroAlunoActivity">
 
     <!--Criação layout do appbar e toolBar-->
     <!--<com.google.android.material.appbar.AppBarLayout
