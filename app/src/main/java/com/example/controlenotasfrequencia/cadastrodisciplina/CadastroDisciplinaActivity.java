@@ -31,6 +31,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     private TextInputEditText edCargaHoraria;
     private LinearLayout lnDisciplina;
     private MaterialSpinner spProfessor;
+    private Professor profSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         edNomeDisciplina = findViewById(R.id.edNomeDisciplina);
         edCargaHoraria = findViewById(R.id.edCargaHoraria);
         lnDisciplina = findViewById(R.id.lnDisciplina);
+
+        profSelecionado = null;
 
         iniciaSpinners();
 
@@ -60,8 +63,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         spProfessor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 0){
-
+                if(i >= 0){
+                    profSelecionado = professores.get(i);
                     /*Button btADS = new Button(getBaseContext());
                     btADS.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                              LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -102,6 +105,12 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
             return;
         }
 
+        if(profSelecionado == null){
+            spProfessor.setError("Informe o professor da Disciplina!");
+            spProfessor.requestFocus();
+            return;
+        }
+
         salvarDisciplina();
     }
     public void salvarDisciplina(){
@@ -109,6 +118,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         disciplina.setCodigo(Integer.parseInt(edCodigoDisciplina.getText().toString()));
         disciplina.setNome(edNomeDisciplina.getText().toString());
         disciplina.setCargaHoraria(edCargaHoraria.getText().toString());
+        disciplina.setProfessor(profSelecionado.getNome());
 
         if(DisciplinaDAO.salvar(disciplina) > 0) {
 

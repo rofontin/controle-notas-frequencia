@@ -28,4 +28,5 @@
     <string name="professores">Professores</string>
     <string name="cadastroProfessor">Cadastro Professor</string>
     <string name="selecioneProfessor">Selecione o Professor</string>
+    <string name="nomeProfessor">Nome Professor</string>
 </resources>

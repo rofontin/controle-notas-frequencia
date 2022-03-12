@@ -60,6 +60,19 @@
                 android:focusable="false"
                 android:backgroundTint="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/nomeProfessor">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edProfessor"
+                    android:focusable="false"
+                    android:backgroundTint="@color/white"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
