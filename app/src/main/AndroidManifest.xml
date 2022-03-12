@@ -11,6 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
+            android:name=".cadastrodisciplina.ListaDisciplinaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cadastrodisciplina.CadastroDisciplinaActivity"
+            android:exported="false"
+            android:label="@string/cadastroDisciplina" />
+        <activity
             android:label="@string/professores"
             android:name=".cadastroprofessor.ListaProfessorActivity"
             android:exported="false" />
@@ -47,7 +54,7 @@
             android:value="controle_notas_frequencia.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="2" />
     </application>
 
 </manifest>
