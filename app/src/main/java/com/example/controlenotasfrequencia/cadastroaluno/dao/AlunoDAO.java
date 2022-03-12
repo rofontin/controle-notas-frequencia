@@ -2,7 +2,7 @@ package com.example.controlenotasfrequencia.cadastroaluno.dao;
 
 import android.util.Log;
 
-import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
+import com.example.controlenotasfrequencia.domain.Aluno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +46,4 @@ public class AlunoDAO {
         }
 
     }
-
-
-
-
 }

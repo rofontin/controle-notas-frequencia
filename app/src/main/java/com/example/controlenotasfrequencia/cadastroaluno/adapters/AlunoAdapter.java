@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.controlenotasfrequencia.R;
-import com.example.controlenotasfrequencia.cadastroaluno.model.Aluno;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
@@ -76,6 +76,4 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
     public int getItemCount() {
         return listaAlunos.size();
     }
-
-
 }
