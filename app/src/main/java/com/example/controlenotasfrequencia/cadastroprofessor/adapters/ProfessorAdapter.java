@@ -36,13 +36,13 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         public ProfessorViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            edRegistro = (TextInputEditText) itemView.findViewById(R.id.edRegistro);
-            edNomeProfessor = (TextInputEditText) itemView.findViewById(R.id.edNomeProfessor);
-            edCpfProfessor = (TextInputEditText) itemView.findViewById(R.id.edCpfProfessor);
-            edTurma = (TextInputEditText) itemView.findViewById(R.id.edTurmaProfessor);
-            edDisciplina = (TextInputEditText) itemView.findViewById(R.id.edDisciplinaProfessor);
-            edDtAdesao = (TextInputEditText) itemView.findViewById(R.id.edDtAdesaoProfessor);
-            edDtNasc = (TextInputEditText) itemView.findViewById(R.id.edDtNascProfessor);
+            edRegistro = itemView.findViewById(R.id.edRegistro);
+            edNomeProfessor = itemView.findViewById(R.id.edNomeProfessor);
+            edCpfProfessor = itemView.findViewById(R.id.edCpfProfessor);
+            edTurma = itemView.findViewById(R.id.edTurmaProfessor);
+            edDisciplina = itemView.findViewById(R.id.edDisciplinaProfessor);
+            edDtAdesao = itemView.findViewById(R.id.edDtAdesaoProfessor);
+            edDtNasc = itemView.findViewById(R.id.edDtNascProfessor);
         }
     }
 
