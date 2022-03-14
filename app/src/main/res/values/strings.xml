@@ -29,4 +29,14 @@
     <string name="cadastroProfessor">Cadastro Professor</string>
     <string name="selecioneProfessor">Selecione o Professor</string>
     <string name="nomeProfessor">Nome Professor</string>
+    <string name="codigo">Código</string>
+    <string name="descricao">Descrição</string>
+    <string name="dtInicio">Data início</string>
+    <string name="dtTermino">Data término</string>
+    <string name="selecioneTurno">Selecione o Turno</string>
+    <string name="turno">Turno</string>
+    <string name="regime">Regime</string>
+    <string name="selecioneRegime">Selecione o Regime</string>
+    <string name="turmas">Turmas</string>
+    <string name="cadastroTurma">Cadastro Turma</string>
 </resources>

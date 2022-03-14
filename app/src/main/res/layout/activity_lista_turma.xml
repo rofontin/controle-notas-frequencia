@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cadastroprofessor.ListaProfessorActivity"
+    tools:context=".cadastroTurma.ListaTurmaActivity"
     android:orientation="vertical"
-    android:id="@+id/lnListaProfessor">
+    android:id="@+id/lnListaTurma">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:id="@+id/rvListaProfessor"/>
+        android:id="@+id/rvListaTurma"/>
 
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -16,10 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.controlenotasfrequencia.R;
-import com.example.controlenotasfrequencia.util.CpfMask;
-import com.example.controlenotasfrequencia.util.Util;
+import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
 import com.example.controlenotasfrequencia.domain.Professor;
+import com.example.controlenotasfrequencia.util.CpfMask;
+import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -74,43 +74,15 @@ public class CadastroProfessorActivity extends AppCompatActivity {
         spTurma = findViewById(R.id.spTurma);
         spDisciplina = findViewById(R.id.spDisciplina);
 
-        //TODO consultar turmas
-        String[] turmas = new String[]{"Análise e Desenv. Sistemas",
-                "Administração", "Ciências Contábeis", "Direito",
-                "Farmácia", "Nutrição"};
-
         //TODO consultar disciplinas
         String[] disciplinas = new String[]{"1a Série",
                 "2a Série", "3a Série", "4a Série"};
 
         spTurma.setAdapter(new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, turmas));
+                android.R.layout.simple_list_item_1, TurmaDAO.retornaTurmas("", new String[]{}, "codigo")));
+
         spDisciplina.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, disciplinas));
-
-        //Ação ao selecionar o item da lista
-        spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-
-                    /*Button btADS = new Button(getBaseContext());
-                    btADS.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                             LinearLayout.LayoutParams.WRAP_CONTENT));
-                    btADS.setText("Botao ADS");
-                    btADS.setBackgroundColor(getColor(R.color.teal_200));
-
-                    llPrincipal.addView(btADS);*/
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
     }
 
     private void validaCampos() {
@@ -179,11 +151,9 @@ public class CadastroProfessorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mn_limpar:
-                //TODO: adicionar método  de limpar dados
                 limparCampos();
                 return true;
             case R.id.mn_salvar:
-                //TODO: adicionar método  de salvar dados
                 validaCampos();
                 return true;
             default:
