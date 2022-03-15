@@ -39,4 +39,10 @@
     <string name="selecioneRegime">Selecione o Regime</string>
     <string name="turmas">Turmas</string>
     <string name="cadastroTurma">Cadastro Turma</string>
+    <string name="selecioneAluno">Selecione o Aluno</string>
+    <string name="edFrequencia">Informe a Frequencia</string>
+    <string name="edNota">Informe a Nota</string>
+    <string name="codigoTurma">Informe o Codigo da Turma</string>
+    <string name="aluno">Aluno</string>
+    <string name="resultadoFinal">Resultado Final</string>
 </resources>

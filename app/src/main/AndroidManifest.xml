@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
+            android:name=".cadastronotasfrequencia.CadastroNotasFrequenciaActivity"
+            android:exported="false" />
+        <activity
             android:name=".cadastrodisciplina.ListaDisciplinaActivity"
             android:exported="false" />
         <activity
@@ -18,21 +21,21 @@
             android:exported="false"
             android:label="@string/cadastroDisciplina" />
         <activity
-            android:label="@string/professores"
             android:name=".cadastroprofessor.ListaProfessorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/professores" />
         <activity
             android:name=".cadastroprofessor.CadastroProfessorActivity"
             android:exported="false"
             android:label="@string/cadastroProfessor" />
         <activity
-            android:label="@string/turmas"
             android:name=".cadastroTurma.ListaTurmaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/turmas" />
         <activity
-            android:label="@string/cadastroTurma"
             android:name=".cadastroTurma.CadastroTurmaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/cadastroTurma" />
         <activity
             android:name=".cadastroaluno.ListaAlunoActivity"
             android:exported="false"
