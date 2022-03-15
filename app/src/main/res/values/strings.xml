@@ -39,4 +39,6 @@
     <string name="selecioneRegime">Selecione o Regime</string>
     <string name="turmas">Turmas</string>
     <string name="cadastroTurma">Cadastro Turma</string>
+    <string name="disciplinas">Disciplinas</string>
+    <string name="notasFrequencia">Notas e Frequência</string>
 </resources>
