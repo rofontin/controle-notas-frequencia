@@ -9,11 +9,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CadastroAlunos">
+        android:theme="@style/Theme.ControleNotasFrequencia">
         <activity
             android:name=".cadastronotasfrequencia.CadastroNotasFrequenciaActivity"
             android:exported="false" />
         <activity
+            android:label="@string/disciplinas"
             android:name=".cadastrodisciplina.ListaDisciplinaActivity"
             android:exported="false" />
         <activity

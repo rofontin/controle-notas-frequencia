@@ -45,4 +45,6 @@
     <string name="codigoTurma">Informe o Codigo da Turma</string>
     <string name="aluno">Aluno</string>
     <string name="resultadoFinal">Resultado Final</string>
+    <string name="disciplinas">Disciplinas</string>
+    <string name="notasFrequencia">Notas e Frequência</string>
 </resources>
