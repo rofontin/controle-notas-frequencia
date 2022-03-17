@@ -42,36 +42,26 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         edNomeDisciplina = findViewById(R.id.edNomeDisciplina);
         edCargaHoraria = findViewById(R.id.edCargaHoraria);
         lnDisciplina = findViewById(R.id.lnDisciplina);
-
         profSelecionado = null;
 
         iniciaSpinners();
-
-
     }
-    private void iniciaSpinners(){
-        spProfessor= findViewById(R.id.spProfessor);
+
+    private void iniciaSpinners() {
+        spProfessor = findViewById(R.id.spProfessor);
 
         List<Professor> professores = ProfessorDAO.retornaProfessores("", new String[]{}, "nome");
 
         ArrayAdapter adapterProfessores = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,  professores);
+                android.R.layout.simple_list_item_1, professores);
 
         spProfessor.setAdapter(adapterProfessores);
 
-        //Ação ao selecionar o item da lista
         spProfessor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i >= 0){
+                if (i >= 0) {
                     profSelecionado = professores.get(i);
-                    /*Button btADS = new Button(getBaseContext());
-                    btADS.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                             LinearLayout.LayoutParams.WRAP_CONTENT));
-                    btADS.setText("Botao ADS");
-                    btADS.setBackgroundColor(getColor(R.color.teal_200));
-
-                    llPrincipal.addView(btADS);*/
                 }
             }
 
@@ -80,32 +70,31 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
-    private void validaCampos(){
 
-        if(edCodigoDisciplina.getText().toString().equals("")){
+    private void validaCampos() {
+
+        if (edCodigoDisciplina.getText().toString().equals("")) {
             edCodigoDisciplina.setError("Informe o Codigo da Disciplina!");
             edCodigoDisciplina.requestFocus();
             return;
         }
 
 
-        if(edNomeDisciplina.getText().toString().equals("")){
+        if (edNomeDisciplina.getText().toString().equals("")) {
             edNomeDisciplina.setError("Informe o Nome da Disciplina!");
             edNomeDisciplina.requestFocus();
             return;
         }
 
 
-        if(edCargaHoraria.getText().toString().equals("")){
+        if (edCargaHoraria.getText().toString().equals("")) {
             edCargaHoraria.setError("Informe a carga Horária da Disciplina!");
             edCargaHoraria.requestFocus();
             return;
         }
 
-        if(profSelecionado == null){
+        if (profSelecionado == null) {
             spProfessor.setError("Informe o professor da Disciplina!");
             spProfessor.requestFocus();
             return;
@@ -113,19 +102,20 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
 
         salvarDisciplina();
     }
-    public void salvarDisciplina(){
+
+    public void salvarDisciplina() {
         Disciplina disciplina = new Disciplina();
         disciplina.setCodigo(Integer.parseInt(edCodigoDisciplina.getText().toString()));
         disciplina.setNome(edNomeDisciplina.getText().toString());
         disciplina.setCargaHoraria(edCargaHoraria.getText().toString());
         disciplina.setProfessor(profSelecionado.getNome());
 
-        if(DisciplinaDAO.salvar(disciplina) > 0) {
+        if (DisciplinaDAO.salvar(disciplina) > 0) {
 
             setResult(RESULT_OK);
             finish();
-        }else
-            Util.customSnackBar(lnDisciplina, "erro ao salvar a disciplina ("+disciplina.getNome()+") " +
+        } else
+            Util.customSnackBar(lnDisciplina, "erro ao salvar a disciplina (" + disciplina.getNome() + ") " +
                     "verifique o log", 0);
 
 
@@ -145,7 +135,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.mn_limpar:
                 limparCampos();
                 return true;

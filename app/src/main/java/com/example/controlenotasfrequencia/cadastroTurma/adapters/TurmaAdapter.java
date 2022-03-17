@@ -51,7 +51,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_turma, parent, false);
 
-        return new TurmaAdapter.TurmaViewHolder(view);
+        return new TurmaViewHolder(view);
     }
 
     @Override

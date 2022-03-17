@@ -11,7 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ControleNotasFrequencia">
         <activity
+            android:label="@string/cadastroNotasFrequencia"
             android:name=".cadastronotasfrequencia.CadastroNotasFrequenciaActivity"
+            android:exported="false" />
+        <activity
+            android:label="@string/notasFrequencia"
+            android:name=".cadastronotasfrequencia.ListaNotasFrequenciaActivity"
             android:exported="false" />
         <activity
             android:label="@string/disciplinas"
@@ -66,7 +71,7 @@
             android:value="controle_notas_frequencia.db" />
         <meta-data
             android:name="VERSION"
-            android:value="2" />
+            android:value="3" />
     </application>
 
 </manifest>

@@ -1,13 +1,10 @@
 package com.example.controlenotasfrequencia.cadastroaluno;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import fr.ganfra.materialspinner.MaterialSpinner;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,19 +14,30 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bytcode.lib.spinner.multiselectspinner.interfaces.MultiSpinnerListener;
+import com.bytcode.lib.spinner.multiselectspinner.spinners.MultiSpinner;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
-import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
-import com.example.controlenotasfrequencia.domain.Professor;
+import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class CadastroAlunoActivity extends AppCompatActivity {
 
@@ -39,14 +47,15 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private TextInputEditText edDtNascAluno;
     private TextInputEditText edDtMatAluno;
     private MaterialSpinner spTurma;
+    private MultiSpinner spDisciplina;
     private LinearLayout lnPrincipal;
-    private Turma turmaSelecionada;
 
     private int vAno;
     private int vMes;
     private int vDia;
     private View dataSelecionada;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,16 +70,9 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         edDtNascAluno.setFocusable(false);
         edDtMatAluno.setFocusable(false);
-
-        turmaSelecionada = null;
-
         edCpfAluno.addTextChangedListener(CpfMask.insert(edCpfAluno));
 
-
         iniciaSpinners();
-
-        turmaSelecionada = null;
-
         setDataAtual();
     }
 
@@ -81,30 +83,35 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         vAno = calendar.get(Calendar.YEAR);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void iniciaSpinners(){
         spTurma = findViewById(R.id.spTurma);
+        spDisciplina = findViewById(R.id.spDisciplina);
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
+        List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
+        spTurma.setAdapter(new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1,  turma));
+        LinkedHashMap<String, Boolean> objectObjectHashMap = new LinkedHashMap<>();
 
-        ArrayAdapter adapterTurma = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,  turma);
+        disciplinas.forEach(disciplina -> {
+            objectObjectHashMap.put(disciplina.toString(), Boolean.FALSE);
+        });
 
-        spTurma.setAdapter(adapterTurma);
+        objectObjectHashMap.put("ai", Boolean.FALSE);
+        spDisciplina.setItems(objectObjectHashMap, selected -> {
+            for(int i=0; i<selected.length; i++) {
+                if(selected[i]) {
+//                    Log.i("TAG", i + " : "+ disciplinas.get(i));
+                }
+            }
+        });
 
-        //Ação ao selecionar o item da lista
         spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
-                    turmaSelecionada = turma.get(i);
-
-                    /*Button btADS = new Button(getBaseContext());
-                    btADS.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                             LinearLayout.LayoutParams.WRAP_CONTENT));
-                    btADS.setText("Botao ADS");
-                    btADS.setBackgroundColor(getColor(R.color.teal_200));
-
-                    llPrincipal.addView(btADS);*/
+//                    turmaSelecionada = turma.get(i);
                 }
             }
 
@@ -113,41 +120,33 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    //Validação dos campos
     private void validaCampos(){
-        //Valida o campo Ra Aluno
         if(edRaAluno.getText().toString().equals("")){
             edRaAluno.setError("Informe o RA do Aluno!");
             edRaAluno.requestFocus();
             return;
         }
 
-        //Valida o campo de nome do Aluno
         if(edNomeAluno.getText().toString().equals("")){
             edNomeAluno.setError("Informe o Nome do Aluno!");
             edNomeAluno.requestFocus();
             return;
         }
 
-        //Valida o campo de CPF do Aluno
         if(edCpfAluno.getText().toString().equals("")){
             edCpfAluno.setError("Informe o CPF do Aluno!");
             edCpfAluno.requestFocus();
             return;
         }
 
-        //Valida o campo de CPF do Aluno
         if(edDtNascAluno.getText().toString().equals("")){
             edDtNascAluno.setError("Informe a data de nascimento do Aluno!");
             edDtNascAluno.requestFocus();
             return;
         }
 
-        //Valida o campo de CPF do Aluno
         if(edDtMatAluno.getText().toString().equals("")){
             edDtMatAluno.setError("Informe a data de matricula do Aluno!");
             edDtMatAluno.requestFocus();
@@ -166,6 +165,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         aluno.setDtMatricula(edDtMatAluno.getText().toString());
         aluno.setTurma(spTurma.getSelectedItem().toString());
 
+        //TODO pegar disciplinas listadas e salvar um AlunoDisciplina
+
         if(AlunoDAO.salvar(aluno) > 0) {
 
             setResult(RESULT_OK);
@@ -173,8 +174,6 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         }else
             Util.customSnackBar(lnPrincipal, "Erro ao salvar o aluno ("+aluno.getNome()+") " +
                     "verifique o log", 0);
-
-
     }
 
     @Override

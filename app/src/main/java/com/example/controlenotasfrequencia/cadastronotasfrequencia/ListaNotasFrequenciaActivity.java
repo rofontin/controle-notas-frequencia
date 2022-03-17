@@ -25,30 +25,29 @@ import java.util.List;
 
 public class ListaNotasFrequenciaActivity extends AppCompatActivity {
 
-    private RecyclerView rvListaNotasFrequencia;
     private LinearLayout lnListaNotasFrequencia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_notas_frequencia);
+        setContentView(R.layout.activity_lista_notas_frequencia);
 
         lnListaNotasFrequencia = findViewById(R.id.lnListaNotasFrequencia);
 
         atualizaListaNotasFrequencia();
-
     }
+
     public void atualizaListaNotasFrequencia(){
-        List<NotasFrequencia> listaNotasFrequencia = new ArrayList<>();
-        listaNotasFrequencia = NotasFrequenciaDAO.retornaNotasFrequencia("", new String[]{}, "codigo asc");
+        List<NotasFrequencia> listaNotasFrequencia = NotasFrequenciaDAO.retornaNotasFrequencia("", new String[]{}, "codigo asc");
         Log.e("PHS", "Tamanho da lista: "+listaNotasFrequencia.size());
 
-        rvListaNotasFrequencia = findViewById(R.id.rvListaNotasFrequencia);
+        RecyclerView rvListaNotasFrequencia = findViewById(R.id.rvListaNotasFrequencia);
         NotasFrequenciaAdapter adapter = new NotasFrequenciaAdapter(listaNotasFrequencia, this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaNotasFrequencia.setLayoutManager(llm);
         rvListaNotasFrequencia.setAdapter(adapter);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflaterMenu = getMenuInflater();
@@ -58,13 +57,11 @@ public class ListaNotasFrequenciaActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.mn_add:
-                abrirCadastroNotasFrequencia();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.mn_add) {
+            abrirCadastroNotasFrequencia();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void abrirCadastroNotasFrequencia() {

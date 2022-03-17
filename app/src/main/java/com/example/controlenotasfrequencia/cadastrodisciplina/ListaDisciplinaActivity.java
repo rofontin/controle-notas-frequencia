@@ -20,7 +20,6 @@ import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListaDisciplinaActivity extends AppCompatActivity {
@@ -38,10 +37,10 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
         atualizaListaDisciplina();
 
     }
-    public void atualizaListaDisciplina(){
-        List<Disciplina> listaDisciplina = new ArrayList<>();
-        listaDisciplina = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome asc");
-        Log.e("PHS", "Tamanho da lista: "+listaDisciplina.size());
+
+    public void atualizaListaDisciplina() {
+        List<Disciplina> listaDisciplina = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome asc");
+        Log.e("PHS", "Tamanho da lista: " + listaDisciplina.size());
 
         rvListaDisciplina = findViewById(R.id.rvListaDisciplina);
         DisciplinaAdapter adapter = new DisciplinaAdapter(listaDisciplina, this);
@@ -49,6 +48,7 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
         rvListaDisciplina.setLayoutManager(llm);
         rvListaDisciplina.setAdapter(adapter);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflaterMenu = getMenuInflater();
@@ -58,13 +58,11 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.mn_add:
-                abrirCadastroDisciplina();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.mn_add) {
+            abrirCadastroDisciplina();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void abrirCadastroDisciplina() {
@@ -81,5 +79,4 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
         }
         atualizaListaDisciplina();
     }
-
 }

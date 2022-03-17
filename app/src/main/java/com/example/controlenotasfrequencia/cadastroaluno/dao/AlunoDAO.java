@@ -3,6 +3,7 @@ package com.example.controlenotasfrequencia.cadastroaluno.dao;
 import android.util.Log;
 
 import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,16 @@ public class AlunoDAO {
             list = Aluno.find(Aluno.class, where, whereArgs, "", orderBy, "");
         }catch (Exception ex){
             Log.e("Erro", "Erro ao retornar lista de alunos: "+ex.getMessage());
+        }
+        return list;
+    }
+
+    public static List<AlunoDisciplina> retornaDiciplinasRelacionadas(String where, String[]whereArgs, String orderBy){
+        List<AlunoDisciplina> list = new ArrayList<>();
+        try{
+            list = AlunoDisciplina.find(AlunoDisciplina.class, where, whereArgs, "", orderBy, "");
+        }catch (Exception ex){
+            Log.e("Erro", "Erro ao retornar lista de disciplinas relacionadas: "+ex.getMessage());
         }
         return list;
     }

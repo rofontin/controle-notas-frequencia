@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/lnListaNotasFrequencia"
+    android:id="@+id/lnPrincipalNotasFrequencia"
     tools:context=".cadastronotasfrequencia.CadastroNotasFrequenciaActivity">
 
         <fr.ganfra.materialspinner.MaterialSpinner
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spTurma"
         app:ms_arrowColor="?attr/colorPrimary"
-        app:ms_floatingLabelText="@string/selecioneProfessor"
+        app:ms_floatingLabelText="@string/turma"
         app:ms_hint="@string/selecioneTurma"
         app:ms_multiline="false"
         android:layout_margin="10dp"/>
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spAluno"
         app:ms_arrowColor="?attr/colorPrimary"
-        app:ms_floatingLabelText="@string/selecioneProfessor"
+        app:ms_floatingLabelText="@string/aluno"
         app:ms_hint="@string/selecioneAluno"
         app:ms_multiline="false"
         android:layout_margin="10dp"/>
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spDisciplina"
         app:ms_arrowColor="?attr/colorPrimary"
-        app:ms_floatingLabelText="@string/selecioneProfessor"
+        app:ms_floatingLabelText="@string/disciplina"
         app:ms_hint="@string/selecioneDisciplina"
         app:ms_multiline="false"
         android:layout_margin="10dp"/>

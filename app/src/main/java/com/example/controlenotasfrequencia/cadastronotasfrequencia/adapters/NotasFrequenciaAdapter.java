@@ -14,58 +14,52 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
-public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequenciaAdapter.CadastroNotaseFrequenciaViewHolder> {
+public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequenciaAdapter.NotasFrequenciaViewHolder> {
 
-    private List<NotasFrequencia> listaNotaseFrequencia;
+    private final List<NotasFrequencia> listaNotasFrequencia;
     private Context context;
 
-    public NotasFrequenciaAdapter(List<NotasFrequencia> listaNotaseFrequencia, Context context){
-        this.listaNotaseFrequencia = listaNotaseFrequencia;
+    public NotasFrequenciaAdapter(List<NotasFrequencia> listaNotasFrequencia, Context context){
+        this.listaNotasFrequencia = listaNotasFrequencia;
         this.context = context;
     }
 
-
-
-    public static class CadastroNotaseFrequenciaViewHolder extends RecyclerView.ViewHolder {
+    public static class NotasFrequenciaViewHolder extends RecyclerView.ViewHolder {
         TextInputEditText edCodigo;
         TextInputEditText edTurma;
         TextInputEditText edAluno;
         TextInputEditText edResultado;
 
-        public CadastroNotaseFrequenciaViewHolder(@NonNull View itemView) {
+        public NotasFrequenciaViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            edCodigo = (TextInputEditText)itemView.findViewById(R.id.edCodigoTurma);
-            edTurma = (TextInputEditText)itemView.findViewById(R.id.edTurma);
-            edAluno =  (TextInputEditText)itemView.findViewById(R.id.edNomeAluno);
-            edResultado =  (TextInputEditText)itemView.findViewById(R.id.edResultadoFinal);
-
+            edCodigo = itemView.findViewById(R.id.edCodigoTurma);
+            edTurma = itemView.findViewById(R.id.edTurma);
+            edAluno = itemView.findViewById(R.id.edNomeAluno);
+            edResultado = itemView.findViewById(R.id.edResultadoFinal);
         }
     }
-    @NonNull
+
     @Override
-    public CadastroNotaseFrequenciaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NotasFrequenciaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_notas_e_frequencia, parent, false);
 
-        NotasFrequenciaAdapter.CadastroNotaseFrequenciaViewHolder viewHolder = new NotasFrequenciaAdapter.CadastroNotaseFrequenciaViewHolder(view);
-
-        return viewHolder;
+        return new NotasFrequenciaViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CadastroNotaseFrequenciaViewHolder holder, int position) {
-        NotasFrequencia NotasFrequencia = listaNotaseFrequencia.get(position);
+    public void onBindViewHolder(@NonNull NotasFrequenciaViewHolder holder, int position) {
+        NotasFrequencia NotasFrequencia = listaNotasFrequencia.get(position);
 
         holder.edCodigo.setText(NotasFrequencia.getCodigo());
-        holder.edTurma.setText(NotasFrequencia.getTurma().toString());
-        holder.edAluno.setText(NotasFrequencia.getAluno().toString());
-        holder.edResultado.setText(NotasFrequencia.getResultado().toString());
-
+        holder.edTurma.setText(NotasFrequencia.getTurma());
+        holder.edAluno.setText(NotasFrequencia.getAluno());
+        holder.edResultado.setText(NotasFrequencia.getResultado());
     }
 
     @Override
     public int getItemCount() {
-        return listaNotaseFrequencia.size();
+        return listaNotasFrequencia.size();
     }
 }

@@ -37,6 +37,16 @@ public class DisciplinaDAO {
         return list;
     }
 
+    public static List<Disciplina> retornaDisciplina(String where, String... whereArgs){
+        List<Disciplina> list = new ArrayList<>();
+        try{
+            list = Disciplina.find(Disciplina.class, where, whereArgs);
+        }catch (Exception ex){
+            Log.e("Erro", "Erro ao retornar lista de disciplinas: "+ex.getMessage());
+        }
+        return list;
+    }
+
     public static boolean delete(Disciplina disciplina){
         try{
             return Disciplina.delete(disciplina);
