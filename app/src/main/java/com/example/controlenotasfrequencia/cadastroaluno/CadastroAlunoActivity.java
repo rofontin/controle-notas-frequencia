@@ -69,6 +69,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         iniciaSpinners();
 
+        turmaSelecionada = null;
 
         setDataAtual();
     }
@@ -90,6 +91,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         spTurma.setAdapter(adapterTurma);
 
+        //Ação ao selecionar o item da lista
         spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

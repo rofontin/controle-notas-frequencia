@@ -9,6 +9,7 @@ import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.domain.Aluno;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.BreakIterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
     }
 
     public static class AlunoViewHolder extends RecyclerView.ViewHolder {
+        TextInputEditText edTurma;
         TextInputEditText edRaAluno;
         TextInputEditText edNomeAluno;
         TextInputEditText edCpfAluno;
