@@ -26,7 +26,6 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
     }
 
     public static class AlunoViewHolder extends RecyclerView.ViewHolder {
-        TextInputEditText edTurma;
         TextInputEditText edRaAluno;
         TextInputEditText edNomeAluno;
         TextInputEditText edCpfAluno;
