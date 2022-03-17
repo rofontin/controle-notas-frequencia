@@ -87,7 +87,6 @@ public class Turma extends SugarRecord {
     @NonNull
     @Override
     public String toString() {
-        return "Código=" + codigo +
-                ", descrição=" + descricao;
+        return descricao;
     }
 }

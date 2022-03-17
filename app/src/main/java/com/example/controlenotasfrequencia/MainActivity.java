@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.controlenotasfrequencia.cadastroTurma.ListaTurmaActivity;
 import com.example.controlenotasfrequencia.cadastroaluno.ListaAlunoActivity;
 import com.example.controlenotasfrequencia.cadastrodisciplina.ListaDisciplinaActivity;
+import com.example.controlenotasfrequencia.cadastronotasfrequencia.ListaNotasFrequenciaActivity;
 import com.example.controlenotasfrequencia.cadastroprofessor.ListaProfessorActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void listarNotasFrequencia(View view) {
-        Intent intent = new Intent(this, ListaAlunoActivity.class);
+        Intent intent = new Intent(this, ListaNotasFrequenciaActivity.class);
         startActivity(intent);
     }
 }

@@ -18,13 +18,18 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.domain.Professor;
+import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class CadastroAlunoActivity extends AppCompatActivity {
 
@@ -33,9 +38,9 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private TextInputEditText edCpfAluno;
     private TextInputEditText edDtNascAluno;
     private TextInputEditText edDtMatAluno;
-    private MaterialSpinner spCursos;
-    private MaterialSpinner spPeriodo;
+    private MaterialSpinner spTurma;
     private LinearLayout lnPrincipal;
+    private Turma turmaSelecionada;
 
     private int vAno;
     private int vMes;
@@ -57,8 +62,14 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         edDtNascAluno.setFocusable(false);
         edDtMatAluno.setFocusable(false);
 
+        turmaSelecionada = null;
+
         edCpfAluno.addTextChangedListener(CpfMask.insert(edCpfAluno));
+
+
         iniciaSpinners();
+
+        turmaSelecionada = null;
 
         setDataAtual();
     }
@@ -71,29 +82,21 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     private void iniciaSpinners(){
-        spCursos = findViewById(R.id.spCursos);
-        spPeriodo = findViewById(R.id.spPeriodo);
+        spTurma = findViewById(R.id.spTurma);
 
-        String cursos[] = new String[]{"Análise e Desenv. Sistemas",
-                "Administração", "Ciências Contábeis", "Direito",
-                "Farmácia", "Nutrição"};
+        List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
 
-        String periodos[] = new String[]{"1a Série",
-                "2a Série", "3a Série", "4a Série"};
+        ArrayAdapter adapterTurma = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1,  turma);
 
-        ArrayAdapter adapterCursos = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,  cursos);
-        ArrayAdapter adapterPeriodo = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,  periodos);
-
-        spCursos.setAdapter(adapterCursos);
-        spPeriodo.setAdapter(adapterPeriodo);
+        spTurma.setAdapter(adapterTurma);
 
         //Ação ao selecionar o item da lista
-        spCursos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 0){
+                if(i >= 0){
+                    turmaSelecionada = turma.get(i);
 
                     /*Button btADS = new Button(getBaseContext());
                     btADS.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -161,8 +164,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         aluno.setCpf(edCpfAluno.getText().toString());
         aluno.setDtNasc(edDtNascAluno.getText().toString());
         aluno.setDtMatricula(edDtMatAluno.getText().toString());
-        aluno.setCurso(spCursos.getSelectedItem().toString());
-        aluno.setPeriodo(spPeriodo.getSelectedItem().toString());
+        aluno.setTurma(spTurma.getSelectedItem().toString());
 
         if(AlunoDAO.salvar(aluno) > 0) {
 

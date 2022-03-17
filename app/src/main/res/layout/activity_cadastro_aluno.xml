@@ -81,21 +81,12 @@
     <fr.ganfra.materialspinner.MaterialSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spCursos"
+        android:id="@+id/spTurma"
         app:ms_arrowColor="?attr/colorPrimary"
         app:ms_floatingLabelText="@string/cursos"
         app:ms_hint="@string/selecioneCurso"
         app:ms_multiline="false"
         android:layout_margin="10dp"/>
 
-    <fr.ganfra.materialspinner.MaterialSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spPeriodo"
-        app:ms_arrowColor="?attr/colorPrimary"
-        app:ms_floatingLabelText="@string/periodo"
-        app:ms_hint="@string/selecionePeriodo"
-        app:ms_multiline="false"
-        android:layout_margin="10dp"/>
 
 </LinearLayout>
