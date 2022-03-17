@@ -15,12 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
-import com.example.controlenotasfrequencia.cadastrodisciplina.CadastroDisciplinaActivity;
-import com.example.controlenotasfrequencia.cadastrodisciplina.adapters.DisciplinaAdapter;
-import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.adapters.NotasFrequenciaAdapter;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
-import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.NotasFrequencia;
 import com.example.controlenotasfrequencia.util.Util;
 
@@ -44,7 +40,7 @@ public class ListaNotasFrequenciaActivity extends AppCompatActivity {
     }
     public void atualizaListaNotasFrequencia(){
         List<NotasFrequencia> listaNotasFrequencia = new ArrayList<>();
-        listaNotasFrequencia = NotasFrequenciaDAO.retornaNotasFrequencia("", new String[]{}, "nome asc");
+        listaNotasFrequencia = NotasFrequenciaDAO.retornaNotasFrequencia("", new String[]{}, "codigo asc");
         Log.e("PHS", "Tamanho da lista: "+listaNotasFrequencia.size());
 
         rvListaNotasFrequencia = findViewById(R.id.rvListaNotasFrequencia);
@@ -81,7 +77,7 @@ public class ListaNotasFrequenciaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            Util.customSnackBar(lnListaNotasFrequencia, "Disciplina salva com sucesso!", 1);
+            Util.customSnackBar(lnListaNotasFrequencia, "Nota e frequencia salvos com sucesso!", 1);
         }
         atualizaListaNotasFrequencia();
     }

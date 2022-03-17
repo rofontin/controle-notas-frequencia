@@ -19,7 +19,7 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
     private List<NotasFrequencia> listaNotaseFrequencia;
     private Context context;
 
-    public NotasFrequenciaAdapter(List<NotasFrequencia> listaDisciplina, Context context){
+    public NotasFrequenciaAdapter(List<NotasFrequencia> listaNotaseFrequencia, Context context){
         this.listaNotaseFrequencia = listaNotaseFrequencia;
         this.context = context;
     }

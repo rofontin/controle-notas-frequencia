@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/lnListaNotasFrequencia"
-    tools:context=".cadastrodisciplina.CadastroDisciplinaActivity">
+    tools:context=".cadastronotasfrequencia.CadastroNotasFrequenciaActivity">
 
         <fr.ganfra.materialspinner.MaterialSpinner
         android:layout_width="match_parent"

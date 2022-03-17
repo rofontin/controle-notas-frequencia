@@ -11,7 +11,7 @@ public class Aluno extends SugarRecord {
     private String cpf;
     private String dtNasc;
     private String dtMatricula;
-    private int turma;
+    private String turma;
 
     public Aluno() {
     }
@@ -66,11 +66,11 @@ public class Aluno extends SugarRecord {
         this.dtMatricula = dtMatricula;
     }
 
-    public int getTurma() {
+    public String getTurma() {
         return turma;
     }
 
-    public void setTurma(int turma) {
+    public void setTurma(String turma) {
         this.turma = turma;
     }
 
