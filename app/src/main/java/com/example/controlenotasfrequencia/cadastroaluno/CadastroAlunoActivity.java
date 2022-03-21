@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,27 +17,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bytcode.lib.spinner.multiselectspinner.interfaces.MultiSpinnerListener;
-import com.bytcode.lib.spinner.multiselectspinner.spinners.MultiSpinner;
+import com.anurag.multiselectionspinner.MultiSpinner;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CadastroAlunoActivity extends AppCompatActivity {
 
     private TextInputEditText edRaAluno;
@@ -46,8 +47,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private TextInputEditText edCpfAluno;
     private TextInputEditText edDtNascAluno;
     private TextInputEditText edDtMatAluno;
-    private MaterialSpinner spTurma;
-    private MultiSpinner spDisciplina;
+    private Turma turmaSelecionada;
+    private List<String> disciplinas;
     private LinearLayout lnPrincipal;
 
     private int vAno;
@@ -55,7 +56,6 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private int vDia;
     private View dataSelecionada;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,35 +83,27 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         vAno = calendar.get(Calendar.YEAR);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void iniciaSpinners(){
-        spTurma = findViewById(R.id.spTurma);
-        spDisciplina = findViewById(R.id.spDisciplina);
+        MaterialSpinner spTurma = findViewById(R.id.spTurma);
+        MultiSpinner spDisciplina = findViewById(R.id.spDisciplina);
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
         List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
+
         spTurma.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,  turma));
-        LinkedHashMap<String, Boolean> objectObjectHashMap = new LinkedHashMap<>();
 
-        disciplinas.forEach(disciplina -> {
-            objectObjectHashMap.put(disciplina.toString(), Boolean.FALSE);
-        });
+        List<String> nomesDisciplinas = disciplinas.stream().map(Disciplina::toString).collect(Collectors.toList());
 
-        objectObjectHashMap.put("ai", Boolean.FALSE);
-        spDisciplina.setItems(objectObjectHashMap, selected -> {
-            for(int i=0; i<selected.length; i++) {
-                if(selected[i]) {
-//                    Log.i("TAG", i + " : "+ disciplinas.get(i));
-                }
-            }
-        });
+        spDisciplina.setAdapterWithOutImage(this, nomesDisciplinas, list -> this.disciplinas = list);
+        spDisciplina.initMultiSpinner(this, spDisciplina);
+
 
         spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
-//                    turmaSelecionada = turma.get(i);
+                    turmaSelecionada = turma.get(i);
                 }
             }
 
@@ -163,17 +155,31 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         aluno.setCpf(edCpfAluno.getText().toString());
         aluno.setDtNasc(edDtNascAluno.getText().toString());
         aluno.setDtMatricula(edDtMatAluno.getText().toString());
-        aluno.setTurma(spTurma.getSelectedItem().toString());
+        aluno.setTurma(turmaSelecionada.getId());
 
-        //TODO pegar disciplinas listadas e salvar um AlunoDisciplina
+        long idAluno = AlunoDAO.salvar(aluno);
 
-        if(AlunoDAO.salvar(aluno) > 0) {
+        if(Objects.nonNull(idAluno)) {
+            salvaRelacionamentoAlunoDisciplina(idAluno);
 
             setResult(RESULT_OK);
             finish();
         }else
             Util.customSnackBar(lnPrincipal, "Erro ao salvar o aluno ("+aluno.getNome()+") " +
                     "verifique o log", 0);
+    }
+
+    private void salvaRelacionamentoAlunoDisciplina(long idAluno) {
+        AlunoDisciplina alunoDisciplina = new AlunoDisciplina();
+        alunoDisciplina.setIdAluno(idAluno);
+
+        this.disciplinas.forEach(nome -> {
+            Optional<Disciplina> disciplina = DisciplinaDAO.retornaDisciplina("nome = ?", nome).stream().findFirst();
+            if(disciplina.isPresent()){
+                alunoDisciplina.setIdDisciplina(disciplina.get().getId());
+                AlunoDisciplinaDAO.salvar(alunoDisciplina);
+            }
+        });
     }
 
     @Override

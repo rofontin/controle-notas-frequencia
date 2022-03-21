@@ -2,11 +2,13 @@ package com.example.controlenotasfrequencia.cadastroaluno;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -39,8 +41,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
     }
 
     public void atualizaListaAluno(){
-        List<Aluno> listaAluno = new ArrayList<>();
-        listaAluno = AlunoDAO.retornaAlunos("", new String[]{}, "nome asc");
+        List<Aluno> listaAluno = AlunoDAO.retornaAlunos("", new String[]{}, "nome asc");
         Log.e("PHS", "Tamanho da lista: "+listaAluno.size());
 
         rvListaAlunos = findViewById(R.id.rvListaAluno);
@@ -57,6 +58,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -68,6 +70,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void abrirCadastroAluno() {
         Intent intent = new Intent(this, CadastroAlunoActivity.class);
         startActivityForResult(intent, 1);

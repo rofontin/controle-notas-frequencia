@@ -41,6 +41,10 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
     private TextInputEditText edNota;
     private LinearLayout lnNotasFrequencia;
     private List<Aluno> aluno = new ArrayList<>();
+    private List<Disciplina> disciplinas = new ArrayList<>();
+    private Aluno alunoSelecionado;
+    private Turma turmaSelecionada;
+    private Disciplina disciplinaSelecionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +57,25 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
 
         iniciaSpinners();
     }
+
     private void iniciaSpinners(){
         spTurma= findViewById(R.id.spTurma);
         spAluno= findViewById(R.id.spAluno);
         spDisciplina= findViewById(R.id.spDisciplina);
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
-        ArrayAdapter adapterTurma = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,  turma);
+        iniciaSpinnerTurma(turma);
+        iniciaSpinnerAluno();
+        iniciaSpinnerDisciplina();
+    }
 
-        spTurma.setAdapter(adapterTurma);
-
-        spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void iniciaSpinnerDisciplina() {
+        spDisciplina.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
-                    aluno = AlunoDAO.retornaAlunos("turma = " + turma.get(i).getId().toString() , new String[]{}, "nome");
-                    spAluno.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
-                            android.R.layout.simple_list_item_1,  aluno));
+                    disciplinaSelecionada = disciplinas.get(i);
                 }
             }
 
@@ -79,16 +84,45 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void iniciaSpinnerAluno() {
         spAluno.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
-                    List<AlunoDisciplina> alunoDisciplinas = AlunoDAO.retornaDiciplinasRelacionadas("idAluno = " + aluno.get(i).getId().toString(), new String[]{}, "nome");
-                    List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("id in ?",
+                    alunoSelecionado = aluno.get(1);
+                    List<AlunoDisciplina> alunoDisciplinas = AlunoDAO.retornaDiciplinasRelacionadas("idAluno = " + aluno.get(i).getId().toString(),
+                            new String[]{}, "nome");
+
+                    disciplinas = DisciplinaDAO.retornaDisciplina("id in ?",
                             alunoDisciplinas.stream().map(AlunoDisciplina::getIdDisciplina).toString());
+
                     spDisciplina.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
                             android.R.layout.simple_list_item_1,  disciplinas));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void iniciaSpinnerTurma(List<Turma> turma) {
+        spTurma.setAdapter(new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, turma));
+
+        spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i >= 0){
+                    turmaSelecionada = turma.get(i);
+                    aluno = AlunoDAO.retornaAlunos("turma = " + turma.get(i).getId().toString() , new String[]{}, "nome");
+                    spAluno.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
+                            android.R.layout.simple_list_item_1,  aluno));
                 }
             }
 
@@ -116,21 +150,18 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
 
     public void salvarDisciplina(){
         NotasFrequencia notasFrequencia = new NotasFrequencia();
-        notasFrequencia.setTurma(spTurma.getSelectedItem().toString());
-        notasFrequencia.setDisciplina(spDisciplina.getSelectedItem().toString());
-        notasFrequencia.setAluno(spAluno.getSelectedItem().toString());
+        notasFrequencia.setTurma(turmaSelecionada.getId());
+        notasFrequencia.setDisciplina(disciplinaSelecionada.getId());
+        notasFrequencia.setAluno(alunoSelecionado.getId());
         notasFrequencia.setFrequencia(edFrequencia.getText().toString());
-        notasFrequencia.setNotas(edNota.getText().toString());
+        notasFrequencia.setNota(Double.valueOf(edNota.getText().toString()));
 
         if(NotasFrequenciaDAO.salvar(notasFrequencia) > 0) {
-
             setResult(RESULT_OK);
             finish();
         }else
             Util.customSnackBar(lnNotasFrequencia, "erro ao salvar a nota e a disciplina do aluno ("+notasFrequencia.getAluno()+") " +
                     "verifique o log", 0);
-
-
     }
 
     @Override

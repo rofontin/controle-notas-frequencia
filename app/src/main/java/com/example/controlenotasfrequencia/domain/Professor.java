@@ -11,21 +11,19 @@ public class Professor extends SugarRecord {
     private String cpf;
     private String dtNasc;
     private String dtAdesao;
-    private String turma;
-    private String disciplina;
+    private Long turma;
 
     public Professor() {
 
     }
 
-    public Professor(int registro, String nome, String cpf, String dtNasc, String dtAdesao, String turma, String disciplina) {
+    public Professor(int registro, String nome, String cpf, String dtNasc, String dtAdesao, Long turma) {
         this.registro = registro;
         this.nome = nome;
         this.cpf = cpf;
         this.dtNasc = dtNasc;
         this.dtAdesao = dtAdesao;
         this.turma = turma;
-        this.disciplina = disciplina;
     }
 
     public int getRegistro() {
@@ -68,21 +66,14 @@ public class Professor extends SugarRecord {
         this.dtAdesao = dtAdesao;
     }
 
-    public String getTurma() {
+    public Long getTurma() {
         return turma;
     }
 
-    public void setTurma(String turma) {
+    public void setTurma(Long turma) {
         this.turma = turma;
     }
 
-    public String getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(String disciplina) {
-        this.disciplina = disciplina;
-    }
 
     @Override
     public boolean equals(Object o) {

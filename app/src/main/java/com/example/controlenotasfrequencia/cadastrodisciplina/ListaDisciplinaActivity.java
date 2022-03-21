@@ -24,7 +24,6 @@ import java.util.List;
 
 public class ListaDisciplinaActivity extends AppCompatActivity {
 
-    private RecyclerView rvListaDisciplina;
     private LinearLayout lnListaDisciplina;
 
     @Override
@@ -35,14 +34,13 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
         lnListaDisciplina = findViewById(R.id.lnListaDisciplina);
 
         atualizaListaDisciplina();
-
     }
 
     public void atualizaListaDisciplina() {
         List<Disciplina> listaDisciplina = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome asc");
         Log.e("PHS", "Tamanho da lista: " + listaDisciplina.size());
 
-        rvListaDisciplina = findViewById(R.id.rvListaDisciplina);
+        RecyclerView rvListaDisciplina = findViewById(R.id.rvListaDisciplina);
         DisciplinaAdapter adapter = new DisciplinaAdapter(listaDisciplina, this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaDisciplina.setLayoutManager(llm);

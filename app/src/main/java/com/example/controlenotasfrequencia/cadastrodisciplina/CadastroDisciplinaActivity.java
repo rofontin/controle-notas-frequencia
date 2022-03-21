@@ -1,8 +1,6 @@
 package com.example.controlenotasfrequencia.cadastrodisciplina;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,15 +10,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.util.Util;
-import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
-import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -52,10 +56,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
 
         List<Professor> professores = ProfessorDAO.retornaProfessores("", new String[]{}, "nome");
 
-        ArrayAdapter adapterProfessores = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, professores);
-
-        spProfessor.setAdapter(adapterProfessores);
+        spProfessor.setAdapter(new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, professores));
 
         spProfessor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -72,8 +74,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void validaCampos() {
-
         if (edCodigoDisciplina.getText().toString().equals("")) {
             edCodigoDisciplina.setError("Informe o Codigo da Disciplina!");
             edCodigoDisciplina.requestFocus();
@@ -83,6 +85,14 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
 
         if (edNomeDisciplina.getText().toString().equals("")) {
             edNomeDisciplina.setError("Informe o Nome da Disciplina!");
+            edNomeDisciplina.requestFocus();
+            return;
+        }
+
+        List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
+        List<String> nomes = disciplinas.stream().map(Disciplina::getNome).collect(Collectors.toList());
+        if(nomes.contains(edNomeDisciplina.getText().toString())){
+            edNomeDisciplina.setError("Nome já existente!");
             edNomeDisciplina.requestFocus();
             return;
         }
@@ -108,7 +118,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         disciplina.setCodigo(Integer.parseInt(edCodigoDisciplina.getText().toString()));
         disciplina.setNome(edNomeDisciplina.getText().toString());
         disciplina.setCargaHoraria(edCargaHoraria.getText().toString());
-        disciplina.setProfessor(profSelecionado.getNome());
+        disciplina.setProfessor(profSelecionado.getId());
 
         if (DisciplinaDAO.salvar(disciplina) > 0) {
 
@@ -117,8 +127,6 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         } else
             Util.customSnackBar(lnDisciplina, "erro ao salvar a disciplina (" + disciplina.getNome() + ") " +
                     "verifique o log", 0);
-
-
     }
 
     @Override
@@ -134,6 +142,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         edCargaHoraria.setText("");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mn_limpar:
@@ -146,6 +155,4 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

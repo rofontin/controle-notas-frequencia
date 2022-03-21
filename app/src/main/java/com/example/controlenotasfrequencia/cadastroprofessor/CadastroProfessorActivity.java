@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -18,11 +19,13 @@ import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
 import com.example.controlenotasfrequencia.domain.Professor;
+import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -34,8 +37,8 @@ public class CadastroProfessorActivity extends AppCompatActivity {
     private TextInputEditText edDtNascProfessor;
     private TextInputEditText edDtAdesaoProfessor;
     private MaterialSpinner spTurma;
-    private MaterialSpinner spDisciplina;
     private LinearLayout lnPrincipal;
+    private Turma turmaSelecionada;
 
     private int vAno;
     private int vMes;
@@ -72,17 +75,28 @@ public class CadastroProfessorActivity extends AppCompatActivity {
 
     private void iniciaSpinners() {
         spTurma = findViewById(R.id.spTurma);
-        spDisciplina = findViewById(R.id.spDisciplina);
+        List<Turma> turmas = TurmaDAO.retornaTurmas("", new String[]{}, "codigo");
 
-        //TODO consultar disciplinas
-        String[] disciplinas = new String[]{"1a Série",
-                "2a Série", "3a Série", "4a Série"};
+        iniciaSpinnerTurma(turmas);
+    }
 
+    private void iniciaSpinnerTurma(List<Turma> turmas) {
         spTurma.setAdapter(new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, TurmaDAO.retornaTurmas("", new String[]{}, "codigo")));
+                android.R.layout.simple_list_item_1, turmas));
 
-        spDisciplina.setAdapter(new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, disciplinas));
+        spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i >= 0) {
+                    turmaSelecionada = turmas.get(i);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void validaCampos() {
@@ -119,25 +133,21 @@ public class CadastroProfessorActivity extends AppCompatActivity {
         salvarProfessor();
     }
 
-    public void salvarProfessor() {
+    private void salvarProfessor() {
         Professor professor = new Professor();
         professor.setRegistro(Integer.parseInt(edRegistroProfessor.getText().toString()));
         professor.setNome(edNomeProfessor.getText().toString());
         professor.setCpf(edCpfProfessor.getText().toString());
         professor.setDtNasc(edDtNascProfessor.getText().toString());
         professor.setDtAdesao(edDtAdesaoProfessor.getText().toString());
-        professor.setTurma(spTurma.getSelectedItem().toString());
-        professor.setDisciplina(spDisciplina.getSelectedItem().toString());
+        professor.setTurma(turmaSelecionada.getId());
 
         if (ProfessorDAO.salvar(professor) > 0) {
-
             setResult(RESULT_OK);
             finish();
         } else
             Util.customSnackBar(lnPrincipal, "Erro ao salvar o professor (" + professor.getNome() + ") " +
                     "verifique o log", 0);
-
-
     }
 
     @Override

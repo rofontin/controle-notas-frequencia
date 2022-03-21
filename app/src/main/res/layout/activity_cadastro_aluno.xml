@@ -88,7 +88,7 @@
         app:ms_multiline="false"
         android:layout_margin="10dp"/>
 
-    <com.bytcode.lib.spinner.multiselectspinner.spinners.MultiSpinner
+    <com.anurag.multiselectionspinner.MultiSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spDisciplina"

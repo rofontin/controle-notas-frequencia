@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.adapters.NotasFrequenciaAdapter;
-import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
-import com.example.controlenotasfrequencia.domain.NotasFrequencia;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListaNotasFrequenciaActivity extends AppCompatActivity {
@@ -38,11 +37,11 @@ public class ListaNotasFrequenciaActivity extends AppCompatActivity {
     }
 
     public void atualizaListaNotasFrequencia(){
-        List<NotasFrequencia> listaNotasFrequencia = NotasFrequenciaDAO.retornaNotasFrequencia("", new String[]{}, "codigo asc");
-        Log.e("PHS", "Tamanho da lista: "+listaNotasFrequencia.size());
+        List<Aluno> listaAluno = AlunoDAO.retornaAlunos("", new String[]{}, "nome asc");
+        Log.e("PHS", "Tamanho da lista: "+listaAluno.size());
 
         RecyclerView rvListaNotasFrequencia = findViewById(R.id.rvListaNotasFrequencia);
-        NotasFrequenciaAdapter adapter = new NotasFrequenciaAdapter(listaNotasFrequencia, this);
+        NotasFrequenciaAdapter adapter = new NotasFrequenciaAdapter(listaAluno, this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaNotasFrequencia.setLayoutManager(llm);
         rvListaNotasFrequencia.setAdapter(adapter);

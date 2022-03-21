@@ -1,11 +1,15 @@
 package com.example.controlenotasfrequencia.cadastrodisciplina.dao;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.controlenotasfrequencia.domain.Disciplina;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DisciplinaDAO {
 
@@ -18,13 +22,24 @@ public class DisciplinaDAO {
         }
     }
 
-    public static Disciplina getDisciplina(int id){
+    public static Disciplina getDisciplina(Long id){
         try{
             return Disciplina.findById(Disciplina.class, id);
         }catch (Exception ex){
             Log.e("Erro", "Erro ao retornar a disciplina: "+ex.getMessage());
             return null;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static Optional<Disciplina> getDisciplinaByProfessor(Long idProfessor){
+        List<Disciplina> list = new ArrayList<>();
+        try{
+            return Disciplina.find(Disciplina.class, "professor = ?", idProfessor.toString()).stream().findFirst();
+        }catch (Exception ex){
+            Log.e("Erro", "Erro ao retornar lista de disciplinas: "+ex.getMessage());
+        }
+        return Optional.empty();
     }
 
     public static List<Disciplina> retornaDisciplina(String where, String[]whereArgs, String orderBy){

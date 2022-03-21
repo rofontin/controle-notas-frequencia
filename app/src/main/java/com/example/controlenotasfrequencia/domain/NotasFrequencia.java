@@ -7,20 +7,20 @@ import java.util.Objects;
 public class NotasFrequencia extends SugarRecord {
 
     private int codigo;
-    private String turma;
-    private String aluno;
-    private String disciplina;
+    private Long turma;
+    private Long aluno;
+    private Long disciplina;
     private String frequencia;
-    private String notas;
-    private String resultado;
+    private Double nota;
+    private Double resultado;
 
-    public NotasFrequencia(int codigo, String turma, String aluno, String disciplina, String frequencia, String notas, String resultado) {
+    public NotasFrequencia(int codigo, Long turma, Long aluno, Long disciplina, String frequencia, Double nota, Double resultado) {
         this.codigo = codigo;
         this.turma = turma;
         this.aluno = aluno;
         this.disciplina = disciplina;
         this.frequencia = frequencia;
-        this.notas = notas;
+        this.nota = nota;
         this.resultado = resultado;
     }
 
@@ -35,19 +35,19 @@ public class NotasFrequencia extends SugarRecord {
         this.codigo = codigo;
     }
 
-    public String getTurma() {
+    public Long getTurma() {
         return turma;
     }
 
-    public void setTurma(String turma) {
+    public void setTurma(Long turma) {
         this.turma = turma;
     }
 
-    public String getAluno() {
+    public Long getAluno() {
         return aluno;
     }
 
-    public void setAluno(String aluno) {
+    public void setAluno(Long aluno) {
         this.aluno = aluno;
     }
 
@@ -59,27 +59,27 @@ public class NotasFrequencia extends SugarRecord {
         this.frequencia = frequencia;
     }
 
-    public String getNotas() {
-        return notas;
+    public Double getNota() {
+        return nota;
     }
 
-    public void setNotas(String notas) {
-        this.notas = notas;
+    public void setNota(Double nota) {
+        this.nota = nota;
     }
 
-    public String getDisciplina() {
+    public Long getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(String disciplina) {
+    public void setDisciplina(Long disciplina) {
         this.disciplina = disciplina;
     }
 
-    public String getResultado() {
+    public Double getResultado() {
         return resultado;
     }
 
-    public void setResultado(String resultado) {
+    public void setResultado(Double resultado) {
         this.resultado = resultado;
     }
 
@@ -88,11 +88,11 @@ public class NotasFrequencia extends SugarRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NotasFrequencia that = (NotasFrequencia) o;
-        return codigo == that.codigo && Objects.equals(turma, that.turma) && Objects.equals(aluno, that.aluno) && Objects.equals(frequencia, that.frequencia) && Objects.equals(notas, that.notas);
+        return codigo == that.codigo && Objects.equals(turma, that.turma) && Objects.equals(aluno, that.aluno) && Objects.equals(frequencia, that.frequencia) && Objects.equals(nota, that.nota);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo, turma, aluno, frequencia, notas);
+        return Objects.hash(codigo, turma, aluno, frequencia, nota);
     }
 }

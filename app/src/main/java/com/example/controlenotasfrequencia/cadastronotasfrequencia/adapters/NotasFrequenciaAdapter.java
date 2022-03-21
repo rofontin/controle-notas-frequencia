@@ -9,18 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
+import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.NotasFrequencia;
+import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
 public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequenciaAdapter.NotasFrequenciaViewHolder> {
 
-    private final List<NotasFrequencia> listaNotasFrequencia;
+    private final List<Aluno> listaAlunos;
     private Context context;
 
-    public NotasFrequenciaAdapter(List<NotasFrequencia> listaNotasFrequencia, Context context){
-        this.listaNotasFrequencia = listaNotasFrequencia;
+    public NotasFrequenciaAdapter(List<Aluno> listaAlunos, Context context){
+        this.listaAlunos = listaAlunos;
         this.context = context;
     }
 
@@ -33,7 +37,6 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
         public NotasFrequenciaViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            edCodigo = itemView.findViewById(R.id.edCodigoTurma);
             edTurma = itemView.findViewById(R.id.edTurma);
             edAluno = itemView.findViewById(R.id.edNomeAluno);
             edResultado = itemView.findViewById(R.id.edResultadoFinal);
@@ -50,16 +53,24 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
 
     @Override
     public void onBindViewHolder(@NonNull NotasFrequenciaViewHolder holder, int position) {
-        NotasFrequencia NotasFrequencia = listaNotasFrequencia.get(position);
+        Aluno aluno = listaAlunos.get(position);
+        List<NotasFrequencia> notasFrequencias = NotasFrequenciaDAO.retornaNotasFrequencia("aluno = " + aluno.getId(),
+                new String[]{}, "codigo asc");
+        Turma turma = TurmaDAO.getTurma(aluno.getTurma());
 
-        holder.edCodigo.setText(NotasFrequencia.getCodigo());
-        holder.edTurma.setText(NotasFrequencia.getTurma());
-        holder.edAluno.setText(NotasFrequencia.getAluno());
-        holder.edResultado.setText(NotasFrequencia.getResultado());
+        holder.edTurma.setText(turma.getDescricao());
+        holder.edAluno.setText(aluno.getNome());
+
+        Double media = (double) 0;
+
+        for (NotasFrequencia nota: notasFrequencias) {
+            media += nota.getNota();
+        }
+        holder.edResultado.setText((int) (media/notasFrequencias.size()));
     }
 
     @Override
     public int getItemCount() {
-        return listaNotasFrequencia.size();
+        return listaAlunos.size();
     }
 }
