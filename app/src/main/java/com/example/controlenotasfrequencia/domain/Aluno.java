@@ -74,15 +74,7 @@ public class Aluno extends SugarRecord {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Aluno aluno = (Aluno) o;
-        return ra == aluno.ra;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ra);
+    public String toString() {
+        return nome;
     }
 }

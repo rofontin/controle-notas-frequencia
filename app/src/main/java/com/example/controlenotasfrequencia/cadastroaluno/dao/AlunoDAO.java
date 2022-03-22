@@ -38,16 +38,6 @@ public class AlunoDAO {
         return list;
     }
 
-    public static List<AlunoDisciplina> retornaDiciplinasRelacionadas(String where, String[]whereArgs, String orderBy){
-        List<AlunoDisciplina> list = new ArrayList<>();
-        try{
-            list = AlunoDisciplina.find(AlunoDisciplina.class, where, whereArgs, "", orderBy, "");
-        }catch (Exception ex){
-            Log.e("Erro", "Erro ao retornar lista de disciplinas relacionadas: "+ex.getMessage());
-        }
-        return list;
-    }
-
     public static boolean delete(Aluno aluno){
         try{
             return Aluno.delete(aluno);

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -170,14 +171,13 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     private void salvaRelacionamentoAlunoDisciplina(long idAluno) {
-        AlunoDisciplina alunoDisciplina = new AlunoDisciplina();
-        alunoDisciplina.setIdAluno(idAluno);
-
         this.disciplinas.forEach(nome -> {
             Optional<Disciplina> disciplina = DisciplinaDAO.retornaDisciplina("nome = ?", nome).stream().findFirst();
+
             if(disciplina.isPresent()){
-                alunoDisciplina.setIdDisciplina(disciplina.get().getId());
+                AlunoDisciplina alunoDisciplina = new AlunoDisciplina(idAluno, disciplina.get().getId());
                 AlunoDisciplinaDAO.salvar(alunoDisciplina);
+                Log.e("Sucesso", "relacionamento AlunoDisciplina salvo: ");
             }
         });
     }

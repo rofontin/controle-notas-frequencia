@@ -33,7 +33,6 @@ public class DisciplinaDAO {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static Optional<Disciplina> getDisciplinaByProfessor(Long idProfessor){
-        List<Disciplina> list = new ArrayList<>();
         try{
             return Disciplina.find(Disciplina.class, "professor = ?", idProfessor.toString()).stream().findFirst();
         }catch (Exception ex){

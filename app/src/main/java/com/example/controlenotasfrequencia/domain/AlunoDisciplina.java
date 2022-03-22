@@ -4,22 +4,27 @@ import com.orm.SugarRecord;
 
 public class AlunoDisciplina extends SugarRecord {
 
-    private Long idAluno;
-    private Long idDisciplina;
+    private Long aluno;
+    private Long disciplina;
 
-    public Long getIdAluno() {
-        return idAluno;
+    public AlunoDisciplina(Long aluno, Long disciplina) {
+        this.aluno = aluno;
+        this.disciplina = disciplina;
     }
 
-    public void setIdAluno(Long idAluno) {
-        this.idAluno = idAluno;
+    public Long getAluno() {
+        return aluno;
     }
 
-    public Long getIdDisciplina() {
-        return idDisciplina;
+    public void setAluno(Long aluno) {
+        this.aluno = aluno;
     }
 
-    public void setIdDisciplina(Long idDisciplina) {
-        this.idDisciplina = idDisciplina;
+    public Long getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Long disciplina) {
+        this.disciplina = disciplina;
     }
 }

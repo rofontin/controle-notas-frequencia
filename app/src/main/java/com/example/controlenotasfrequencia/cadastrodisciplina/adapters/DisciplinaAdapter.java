@@ -52,7 +52,6 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
         return new DisciplinaViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull DisciplinaViewHolder holder, int position) {
         Disciplina disciplina = listaDisciplina.get(position);

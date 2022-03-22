@@ -56,17 +56,19 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
         Aluno aluno = listaAlunos.get(position);
         List<NotasFrequencia> notasFrequencias = NotasFrequenciaDAO.retornaNotasFrequencia("aluno = " + aluno.getId(),
                 new String[]{}, "codigo asc");
-        Turma turma = TurmaDAO.getTurma(aluno.getTurma());
 
+        Turma turma = TurmaDAO.getTurma(aluno.getTurma());
         holder.edTurma.setText(turma.getDescricao());
         holder.edAluno.setText(aluno.getNome());
 
-        Double media = (double) 0;
+        if(!notasFrequencias.isEmpty()){
+            Double media = (double) 0;
 
-        for (NotasFrequencia nota: notasFrequencias) {
-            media += nota.getNota();
+            for (NotasFrequencia nota: notasFrequencias) {
+                media += nota.getNota();
+            }
+            holder.edResultado.setText((int) (media/notasFrequencias.size()));
         }
-        holder.edResultado.setText((int) (media/notasFrequencias.size()));
     }
 
     @Override

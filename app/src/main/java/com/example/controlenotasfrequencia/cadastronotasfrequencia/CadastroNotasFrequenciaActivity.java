@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
@@ -92,15 +93,16 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
-                    alunoSelecionado = aluno.get(1);
-                    List<AlunoDisciplina> alunoDisciplinas = AlunoDAO.retornaDiciplinasRelacionadas("idAluno = " + aluno.get(i).getId().toString(),
-                            new String[]{}, "nome");
+                    alunoSelecionado = aluno.get(i);
+                    List<AlunoDisciplina> alunoDisciplinas = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(alunoSelecionado.getId());
 
-                    disciplinas = DisciplinaDAO.retornaDisciplina("id in ?",
-                            alunoDisciplinas.stream().map(AlunoDisciplina::getIdDisciplina).toString());
+                    if(!alunoDisciplinas.isEmpty()){
+                        disciplinas = DisciplinaDAO.retornaDisciplina("id in ?",
+                                alunoDisciplinas.stream().map(AlunoDisciplina::getDisciplina).toString());
 
-                    spDisciplina.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
-                            android.R.layout.simple_list_item_1,  disciplinas));
+                        spDisciplina.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
+                                android.R.layout.simple_list_item_1,  disciplinas));
+                    }
                 }
             }
 
@@ -121,6 +123,7 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
                 if(i >= 0){
                     turmaSelecionada = turma.get(i);
                     aluno = AlunoDAO.retornaAlunos("turma = " + turma.get(i).getId().toString() , new String[]{}, "nome");
+
                     spAluno.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
                             android.R.layout.simple_list_item_1,  aluno));
                 }
