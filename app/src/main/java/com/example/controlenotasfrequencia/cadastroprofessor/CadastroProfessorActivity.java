@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +57,7 @@ public class CadastroProfessorActivity extends AppCompatActivity {
         edDtNascProfessor = findViewById(R.id.edDtNascProfessor);
         edDtAdesaoProfessor = findViewById(R.id.edDtAdesaoProfessor);
         lnPrincipal = findViewById(R.id.lnPrincipalProfessor);
+        spTurma = findViewById(R.id.spTurma);
 
         edDtNascProfessor.setFocusable(false);
         edDtAdesaoProfessor.setFocusable(false);
@@ -74,7 +76,7 @@ public class CadastroProfessorActivity extends AppCompatActivity {
     }
 
     private void iniciaSpinners() {
-        spTurma = findViewById(R.id.spTurma);
+
         List<Turma> turmas = TurmaDAO.retornaTurmas("", new String[]{}, "codigo");
 
         iniciaSpinnerTurma(turmas);
@@ -127,6 +129,12 @@ public class CadastroProfessorActivity extends AppCompatActivity {
         if (edDtAdesaoProfessor.getText().toString().equals("")) {
             edDtAdesaoProfessor.setError("Informe a data de adesão do Professor!");
             edDtAdesaoProfessor.requestFocus();
+            return;
+        }
+
+        if (turmaSelecionada == null) {
+            spTurma.setError("Informe a turma do professor!");
+            spTurma.requestFocus();
             return;
         }
 

@@ -129,6 +129,24 @@ public class CadastroTurmaActivity extends AppCompatActivity {
             return;
         }
 
+        if (spRegime.getSelectedItem() == null) {
+            spRegime.setError("Informe o Regime!");
+            spRegime.requestFocus();
+            return;
+        }
+
+        if (spPeriodo.getSelectedItem() == null) {
+            spPeriodo.setError("Informe o Período!");
+            spPeriodo.requestFocus();
+            return;
+        }
+
+        if (spTurno.getSelectedItem() == null) {
+            spTurno.setError("Informe o Turno!");
+            spTurno.requestFocus();
+            return;
+        }
+
         salvarTurma();
     }
 
@@ -143,7 +161,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         turma.setPeriodo(Periodo.fromString(spPeriodo.getSelectedItem().toString()));
 
         if (TurmaDAO.salvar(turma) > 0) {
-
             setResult(RESULT_OK);
             finish();
         } else

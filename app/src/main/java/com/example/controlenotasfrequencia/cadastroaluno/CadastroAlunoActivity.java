@@ -51,7 +51,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private Turma turmaSelecionada;
     private List<String> disciplinas;
     private LinearLayout lnPrincipal;
-
+    private MaterialSpinner spTurma;
+    private MultiSpinner spDisciplina;
     private int vAno;
     private int vMes;
     private int vDia;
@@ -68,6 +69,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         edDtNascAluno = findViewById(R.id.edDtNascAluno);
         edDtMatAluno = findViewById(R.id.edDtMatAluno);
         lnPrincipal = findViewById(R.id.lnPrincipalAluno);
+        spTurma = findViewById(R.id.spTurma);
+        spDisciplina = findViewById(R.id.spDisciplina);
 
         edDtNascAluno.setFocusable(false);
         edDtMatAluno.setFocusable(false);
@@ -85,8 +88,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     private void iniciaSpinners(){
-        MaterialSpinner spTurma = findViewById(R.id.spTurma);
-        MultiSpinner spDisciplina = findViewById(R.id.spDisciplina);
+
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
         List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
@@ -143,6 +145,12 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         if(edDtMatAluno.getText().toString().equals("")){
             edDtMatAluno.setError("Informe a data de matricula do Aluno!");
             edDtMatAluno.requestFocus();
+            return;
+        }
+
+        if (turmaSelecionada == null) {
+            spTurma.setError("Informe a turma do aluno!");
+            spTurma.requestFocus();
             return;
         }
 
