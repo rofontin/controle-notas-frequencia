@@ -48,4 +48,5 @@
     <string name="disciplinas">Disciplinas</string>
     <string name="notasFrequencia">Notas e Frequência</string>
     <string name="cadastroNotasFrequencia">Cadastro notas e frequência</string>
+    <string name="frequencia">Frequência</string>
 </resources>

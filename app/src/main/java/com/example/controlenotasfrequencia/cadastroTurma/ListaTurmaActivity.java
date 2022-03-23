@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -75,6 +76,13 @@ public class ListaTurmaActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             Util.customSnackBar(lnLista, "Turma salva com sucesso!", 1);
         }
+        atualizaListaTurma();
+    }
+
+    public void deletar(View view) {
+        //TODO deletar vinculos tbm
+//        Aluno aluno = AlunoDAO.getAluno(1L);
+//        AlunoDAO.delete(aluno);
         atualizaListaTurma();
     }
 }

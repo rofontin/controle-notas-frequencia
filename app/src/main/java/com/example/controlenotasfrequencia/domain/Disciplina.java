@@ -8,10 +8,10 @@ public class Disciplina extends SugarRecord {
 
     private int codigo;
     private String nome;
-    private String cargaHoraria;
+    private int cargaHoraria;
     private Long professor;
 
-    public Disciplina(int codigo, String nome, String cargaHoraria, Long professor) {
+    public Disciplina(int codigo, String nome, int cargaHoraria, Long professor) {
         this.codigo = codigo;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
@@ -50,11 +50,11 @@ public class Disciplina extends SugarRecord {
         this.nome = nome;
     }
 
-    public String getCargaHoraria() {
+    public int getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(String cargaHoraria) {
+    public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 

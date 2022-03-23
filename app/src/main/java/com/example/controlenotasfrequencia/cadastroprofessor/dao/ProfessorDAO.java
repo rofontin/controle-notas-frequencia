@@ -46,4 +46,9 @@ public class ProfessorDAO {
         }
 
     }
+
+    public static List<Professor> retornaProfessoresSemDisciplinas() {
+        return Professor.findWithQuery(Professor.class, "SELECT PROFESSOR.* FROM PROFESSOR LEFT JOIN " +
+                "DISCIPLINA ON PROFESSOR.ID = DISCIPLINA.PROFESSOR WHERE DISCIPLINA.PROFESSOR IS NULL");
+    }
 }

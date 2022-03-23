@@ -7,6 +7,10 @@ public class AlunoDisciplina extends SugarRecord {
     private Long aluno;
     private Long disciplina;
 
+    public AlunoDisciplina () {
+
+    }
+
     public AlunoDisciplina(Long aluno, Long disciplina) {
         this.aluno = aluno;
         this.disciplina = disciplina;

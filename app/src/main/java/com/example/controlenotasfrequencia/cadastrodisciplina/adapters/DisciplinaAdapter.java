@@ -1,16 +1,16 @@
 package com.example.controlenotasfrequencia.cadastrodisciplina.adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Professor;
@@ -33,6 +33,7 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
         TextInputEditText edNomeDisciplina;
         TextInputEditText edCargaHoraria;
         TextInputEditText edProfessor;
+        Button deletar;
 
         public DisciplinaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,6 +42,7 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
             edNomeDisciplina = itemView.findViewById(R.id.edNomeDisciplina);
             edCargaHoraria = itemView.findViewById(R.id.edCargaHoraria);
             edProfessor = itemView.findViewById(R.id.edProfessor);
+            deletar = itemView.findViewById(R.id.deletar);
         }
     }
     @NonNull
@@ -62,6 +64,11 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
 
         Professor professor = ProfessorDAO.getProfessor(disciplina.getProfessor());
         holder.edProfessor.setText(professor.getNome());
+
+        holder.deletar.setOnClickListener(view -> {
+            //TODO DELETAR VINCULOS ANTES
+            DisciplinaDAO.delete(disciplina);
+        });
     }
 
     @Override

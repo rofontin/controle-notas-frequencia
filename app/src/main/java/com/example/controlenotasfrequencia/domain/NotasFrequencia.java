@@ -10,18 +10,16 @@ public class NotasFrequencia extends SugarRecord {
     private Long turma;
     private Long aluno;
     private Long disciplina;
-    private String frequencia;
+    private int frequencia;
     private Double nota;
-    private Double resultado;
 
-    public NotasFrequencia(int codigo, Long turma, Long aluno, Long disciplina, String frequencia, Double nota, Double resultado) {
+    public NotasFrequencia(int codigo, Long turma, Long aluno, Long disciplina, int frequencia, Double nota, Double resultado) {
         this.codigo = codigo;
         this.turma = turma;
         this.aluno = aluno;
         this.disciplina = disciplina;
         this.frequencia = frequencia;
         this.nota = nota;
-        this.resultado = resultado;
     }
 
     public NotasFrequencia() {
@@ -51,11 +49,11 @@ public class NotasFrequencia extends SugarRecord {
         this.aluno = aluno;
     }
 
-    public String getFrequencia() {
+    public int getFrequencia() {
         return frequencia;
     }
 
-    public void setFrequencia(String frequencia) {
+    public void setFrequencia(int frequencia) {
         this.frequencia = frequencia;
     }
 
@@ -73,14 +71,6 @@ public class NotasFrequencia extends SugarRecord {
 
     public void setDisciplina(Long disciplina) {
         this.disciplina = disciplina;
-    }
-
-    public Double getResultado() {
-        return resultado;
-    }
-
-    public void setResultado(Double resultado) {
-        this.resultado = resultado;
     }
 
     @Override

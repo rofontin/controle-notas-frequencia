@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
+import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.NotasFrequencia;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,10 +31,10 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
     }
 
     public static class NotasFrequenciaViewHolder extends RecyclerView.ViewHolder {
-        TextInputEditText edCodigo;
         TextInputEditText edTurma;
         TextInputEditText edAluno;
         TextInputEditText edResultado;
+        TextInputEditText edFrequencia;
 
         public NotasFrequenciaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -40,6 +42,7 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
             edTurma = itemView.findViewById(R.id.edTurma);
             edAluno = itemView.findViewById(R.id.edNomeAluno);
             edResultado = itemView.findViewById(R.id.edResultadoFinal);
+            edFrequencia = itemView.findViewById(R.id.edFrequencia);
         }
     }
 
@@ -60,14 +63,32 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
         Turma turma = TurmaDAO.getTurma(aluno.getTurma());
         holder.edTurma.setText(turma.getDescricao());
         holder.edAluno.setText(aluno.getNome());
+        holder.edResultado.setText("Sem notas lançadas");
+        holder.edFrequencia.setText("0%");
 
+        calculaMediaEFrequencia(holder, notasFrequencias);
+    }
+
+    private void calculaMediaEFrequencia(@NonNull NotasFrequenciaViewHolder holder, List<NotasFrequencia> notasFrequencias) {
         if(!notasFrequencias.isEmpty()){
-            Double media = (double) 0;
+            double media = 0;
+            float frequencia = 0;
+            float frequenciaTotal = 0;
 
             for (NotasFrequencia nota: notasFrequencias) {
+                Disciplina disciplina = DisciplinaDAO.getDisciplina(nota.getDisciplina());
+                frequenciaTotal += disciplina.getCargaHoraria();
                 media += nota.getNota();
+                frequencia += nota.getFrequencia();
             }
-            holder.edResultado.setText((int) (media/notasFrequencias.size()));
+            double mediaFinal = media / notasFrequencias.size();
+            float frequenciaFinal = ((frequencia * 100 ) / frequenciaTotal);
+
+            if(mediaFinal >= 7.0 && frequenciaFinal >= 3.0){
+                holder.edResultado.setText("Aprovado");
+            }
+            holder.edResultado.setText("Reprovado");
+            holder.edFrequencia.setText(Math.round(frequenciaFinal) + "%");
         }
     }
 

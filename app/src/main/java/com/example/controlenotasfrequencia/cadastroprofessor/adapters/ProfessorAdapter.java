@@ -5,6 +5,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -13,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
+import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         TextInputEditText edDisciplina;
         TextInputEditText edDtAdesao;
         TextInputEditText edDtNasc;
+        Button deletar;
 
         public ProfessorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +53,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
             edDisciplina = itemView.findViewById(R.id.edDisciplinaProfessor);
             edDtAdesao = itemView.findViewById(R.id.edDtAdesaoProfessor);
             edDtNasc = itemView.findViewById(R.id.edDtNascProfessor);
+            deletar = itemView.findViewById(R.id.deletar);
         }
     }
 
@@ -84,6 +87,11 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
 
         holder.edDtAdesao.setText(professor.getDtAdesao());
         holder.edDtNasc.setText(professor.getDtNasc());
+
+        holder.deletar.setOnClickListener(view -> {
+            //TODO DELETAR VINCULOS ANTES
+            ProfessorDAO.delete(professor);
+        });
     }
 
     @Override

@@ -78,7 +78,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:hint="@string/regime">
                     <com.google.android.material.textfield.TextInputEditText
@@ -129,7 +129,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:hint="@string/dtTermino">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -140,6 +140,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:id="@+id/deletar"
+                android:text="Deletar"
+                />
 
         </LinearLayout>
 

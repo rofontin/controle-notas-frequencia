@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,6 +35,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         TextInputEditText edTurma;
         TextInputEditText edDtMatricula;
         TextInputEditText edDtNasc;
+        Button deletar;
 
         public AlunoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +46,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             edTurma = itemView.findViewById(R.id.edTurma);
             edDtMatricula = itemView.findViewById(R.id.edDtMatricula);
             edDtNasc = itemView.findViewById(R.id.edDtNascAluno);
+            deletar = itemView.findViewById(R.id.deletar);
 
         }
     }
@@ -53,9 +57,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_aluno, parent, false);
 
-        AlunoAdapter.AlunoViewHolder viewHolder = new AlunoViewHolder(view);
-
-        return viewHolder;
+        return new AlunoViewHolder(view);
     }
 
     @Override
@@ -72,10 +74,15 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         holder.edDtMatricula.setText(aluno.getDtMatricula());
         holder.edDtNasc.setText(aluno.getDtNasc());
 
+        holder.deletar.setOnClickListener(view -> {
+            //TODO DELETAR VINCULOS ANTES
+            AlunoDAO.delete(aluno);
+        });
     }
 
     @Override
     public int getItemCount() {
         return listaAlunos.size();
     }
+
 }

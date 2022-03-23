@@ -33,6 +33,7 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
 
     private MaterialSpinner spTurma;
@@ -97,13 +98,23 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
                     List<AlunoDisciplina> alunoDisciplinas = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(alunoSelecionado.getId());
 
                     if(!alunoDisciplinas.isEmpty()){
-                        disciplinas = DisciplinaDAO.retornaDisciplina("id in ?",
-                                alunoDisciplinas.stream().map(AlunoDisciplina::getDisciplina).toString());
+                        List<Long> idsDisciplinas = new ArrayList<>();
+                        alunoDisciplinas.forEach(alunoDisciplina -> {
+                            idsDisciplinas.add(alunoDisciplina.getDisciplina());
+                        });
+
+                        disciplinas = DisciplinaDAO.retornaDisciplina("id in"
+                                + idsDisciplinas.toString().replace("[", "(").replace("]", ")"));
 
                         spDisciplina.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
                                 android.R.layout.simple_list_item_1,  disciplinas));
                     }
                 }
+            }
+
+            private List<String> getListIdDisciplina(AlunoDisciplina alunoDisciplina) {
+                List<String> ids = new ArrayList<>();
+                return ids;
             }
 
             @Override
@@ -156,7 +167,7 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
         notasFrequencia.setTurma(turmaSelecionada.getId());
         notasFrequencia.setDisciplina(disciplinaSelecionada.getId());
         notasFrequencia.setAluno(alunoSelecionado.getId());
-        notasFrequencia.setFrequencia(edFrequencia.getText().toString());
+        notasFrequencia.setFrequencia(Integer.parseInt(edFrequencia.getText().toString()));
         notasFrequencia.setNota(Double.valueOf(edNota.getText().toString()));
 
         if(NotasFrequenciaDAO.salvar(notasFrequencia) > 0) {

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -32,6 +34,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         TextInputEditText edPeriodo;
         TextInputEditText edDtInicio;
         TextInputEditText edDtTermino;
+        Button deletar;
 
         public TurmaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +46,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
             edPeriodo = itemView.findViewById(R.id.edPeriodoTurma);
             edDtInicio = itemView.findViewById(R.id.edDtInicioTurma);
             edDtTermino = itemView.findViewById(R.id.edDtTerminoTurma);
+            deletar = itemView.findViewById(R.id.deletar);
         }
     }
 
@@ -65,6 +69,11 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         holder.edPeriodo.setText(turma.getPeriodo().toString());
         holder.edDtInicio.setText(turma.getDtInicio());
         holder.edDtTermino.setText(turma.getDtTermino());
+
+        holder.deletar.setOnClickListener(view -> {
+            //TODO DELETAR VINCULOS ANTES
+            TurmaDAO.delete(turma);
+        });
     }
 
     @Override
