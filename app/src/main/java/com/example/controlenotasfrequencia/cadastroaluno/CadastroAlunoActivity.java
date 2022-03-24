@@ -89,6 +89,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
     private void iniciaSpinners(){
 
+        spDisciplina.setVisibility(View.GONE);
+
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
         List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
@@ -107,6 +109,10 @@ public class CadastroAlunoActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
                     turmaSelecionada = turma.get(i);
+                    spDisciplina.setVisibility(View.VISIBLE);
+                }
+                if (i == -1) {
+                    spDisciplina.setVisibility(View.GONE);
                 }
             }
 

@@ -65,6 +65,9 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
         spAluno= findViewById(R.id.spAluno);
         spDisciplina= findViewById(R.id.spDisciplina);
 
+        spAluno.setVisibility(View.GONE);
+        spDisciplina.setVisibility(View.GONE);
+
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
         iniciaSpinnerTurma(turma);
         iniciaSpinnerAluno();
@@ -79,6 +82,7 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
                 if(i >= 0){
                     disciplinaSelecionada = disciplinas.get(i);
                 }
+
             }
 
             @Override
@@ -94,6 +98,7 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
+                    spDisciplina.setVisibility(View.VISIBLE);
                     alunoSelecionado = aluno.get(i);
                     List<AlunoDisciplina> alunoDisciplinas = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(alunoSelecionado.getId());
 
@@ -109,6 +114,10 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
                         spDisciplina.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
                                 android.R.layout.simple_list_item_1,  disciplinas));
                     }
+
+                }
+                if (i == -1) {
+                    spDisciplina.setVisibility(View.GONE);
                 }
             }
 
@@ -132,11 +141,15 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i >= 0){
+                    spAluno.setVisibility(View.VISIBLE);
                     turmaSelecionada = turma.get(i);
                     aluno = AlunoDAO.retornaAlunos("turma = " + turma.get(i).getId().toString() , new String[]{}, "nome");
 
                     spAluno.setAdapter(new ArrayAdapter(CadastroNotasFrequenciaActivity.this,
                             android.R.layout.simple_list_item_1,  aluno));
+                }
+                if (i == -1) {
+                    spAluno.setVisibility(View.GONE);
                 }
             }
 

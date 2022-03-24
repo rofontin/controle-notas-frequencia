@@ -44,6 +44,7 @@ public class CadastroTurmaActivity extends AppCompatActivity {
     private int vDia;
     private View dataSelecionada;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +56,27 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         edDtTermino = findViewById(R.id.edDtTerminoTurma);
         lnPrincipal = findViewById(R.id.lnPrincipalTurma);
 
+
         edDtInicio.setFocusable(false);
         edDtTermino.setFocusable(false);
 
+
+
+
         iniciaSpinners();
+
         setDataAtual();
     }
 
     private void iniciaSpinners() {
+
         spRegime = findViewById(R.id.spRegimeTurma);
         spTurno = findViewById(R.id.spTurnoTurma);
         spPeriodo = findViewById(R.id.spPeriodoTurma);
+
+        spPeriodo.setVisibility(View.GONE);
+        spTurno.setVisibility(View.GONE);
+
 
         String[] regimes = new String[]{Regime.ANUAL.toString(), Regime.SEMESTRAL.toString()};
         String[] turnos = new String[]{Turno.MANHA.toString(), Turno.TARDE.toString(), Turno.NOITE.toString()};
@@ -78,16 +89,42 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         spRegime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 String[] periodos = new String[]{};
                 if (i != -1) {
                     if (regimes[i].equals(Regime.SEMESTRAL.toString())) {
+                        spPeriodo.setVisibility(View.VISIBLE);
                         periodos = new String[]{Periodo.SEMESTRE_1.toString(), Periodo.SEMESTRE_2.toString()};
                     } else {
+                        spPeriodo.setVisibility(View.VISIBLE);
                         periodos = new String[]{Periodo.BIMESTRE_1.toString(), Periodo.BIMESTRE_2.toString(),
                                 Periodo.BIMESTRE_3.toString(), Periodo.BIMESTRE_4.toString()};
                     }
+
                 }
                 spPeriodo.setAdapter(new ArrayAdapter(CadastroTurmaActivity.this, android.R.layout.simple_list_item_1, periodos));
+                if (i == -1) {
+                    spPeriodo.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+
+        spPeriodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != -1) {
+                    spTurno.setVisibility(View.VISIBLE);
+                }
+
+                if (i == -1) {
+                    spTurno.setVisibility(View.GONE);
+                }
             }
 
             @Override
