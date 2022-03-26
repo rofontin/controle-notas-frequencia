@@ -1,21 +1,23 @@
 package com.example.controlenotasfrequencia.cadastroaluno.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDisciplinaDAO;
-import com.example.controlenotasfrequencia.cadastronotasfrequencia.ListaNotasFrequenciaActivity;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
@@ -48,7 +50,9 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         TextInputEditText edDtMatricula;
         TextInputEditText edDtNasc;
         Button deletar;
+        CardView cardAluno;
 
+        @SuppressLint("ResourceType")
         public AlunoViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -59,6 +63,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             edDtMatricula = itemView.findViewById(R.id.edDtMatricula);
             edDtNasc = itemView.findViewById(R.id.edDtNascAluno);
             deletar = itemView.findViewById(R.id.deletar);
+            cardAluno = itemView.findViewById(R.layout.card_view_aluno);
 
         }
     }
@@ -68,7 +73,9 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_aluno, parent, false);
 
-        return new AlunoViewHolder(view);
+        AlunoAdapter.AlunoViewHolder viewHolder = new AlunoViewHolder(view);
+
+        return viewHolder;
     }
 
     @Override
