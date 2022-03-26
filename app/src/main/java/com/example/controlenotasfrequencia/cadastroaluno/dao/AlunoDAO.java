@@ -26,6 +26,18 @@ public class AlunoDAO {
              return null;
          }
     }
+    public static Aluno getByRa(int ra) {
+        try {
+            List<Aluno> alunoList = getAll("ra = ?", new String[]{String.valueOf(ra)}, "");
+            if (!alunoList.isEmpty()) {
+                return alunoList.get(0);
+            }
+            return null;
+        } catch (Exception ex) {
+            Log.e("Erro", " Erro ao retornar: " + ex.getMessage());
+            return null;
+        }
+    }
 
     public static List<Aluno> retornaAlunos(String where, String[]whereArgs, String orderBy){
         List<Aluno> list = new ArrayList<>();
@@ -54,5 +66,15 @@ public class AlunoDAO {
             Log.e("Erro", "Erro ao apagar o aluno: "+ex.getMessage());
             return false;
         }
+    }
+
+    public static List<Aluno> getAll(String where, String[] whereArgs, String orderBy) {
+        List<Aluno> list = new ArrayList<>();
+        try {
+            list = Aluno.find(Aluno.class, where, whereArgs, "", orderBy, "");
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao retornar lista: " + ex.getMessage());
+        }
+        return list;
     }
 }

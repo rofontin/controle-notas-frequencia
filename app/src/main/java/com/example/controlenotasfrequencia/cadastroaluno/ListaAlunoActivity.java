@@ -26,10 +26,11 @@ import com.example.controlenotasfrequencia.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaAlunoActivity extends AppCompatActivity {
+public class ListaAlunoActivity extends AppCompatActivity implements AlunoAdapter.OnAlunoListener {
 
     private RecyclerView rvListaAlunos;
     private LinearLayout lnLista;
+    private List<Aluno> listaAluno = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,11 @@ public class ListaAlunoActivity extends AppCompatActivity {
     }
 
     public void atualizaListaAluno(){
-        List<Aluno> listaAluno = AlunoDAO.retornaAlunos("", new String[]{}, "nome asc");
+        listaAluno = AlunoDAO.getAll("", new String[]{}, "nome asc");
         Log.e("PHS", "Tamanho da lista: "+listaAluno.size());
 
         rvListaAlunos = findViewById(R.id.rvListaAluno);
-        AlunoAdapter adapter = new AlunoAdapter(listaAluno, this);
+        AlunoAdapter adapter = new AlunoAdapter(listaAluno, this,this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaAlunos.setLayoutManager(llm);
         rvListaAlunos.setAdapter(adapter);
@@ -85,5 +86,13 @@ public class ListaAlunoActivity extends AppCompatActivity {
             Util.customSnackBar(lnLista, "Aluno salvo com sucesso!", 1);
         }
         atualizaListaAluno();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onAlunoClick(int position) {
+        Intent intent = new Intent(this, CadastroAlunoActivity.class);
+        intent.putExtra("ra", listaAluno.get(position).getRa());
+        startActivityForResult(intent, 1);
     }
 }

@@ -2,8 +2,10 @@ package com.example.controlenotasfrequencia.cadastroaluno;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Selection;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,6 +61,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private int vMes;
     private int vDia;
     private View dataSelecionada;
+    private Aluno aluno;
+    private Disciplina disciplina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,20 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         iniciaSpinners();
         setDataAtual();
+
+        Intent iin = getIntent();
+        
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            int ra = (int) b.get("ra");
+            aluno = AlunoDAO.getByRa(ra);
+            popularCampos(aluno);
+        } else {
+            aluno = new Aluno();
+        }
     }
+
 
     private void setDataAtual() {
         Calendar calendar = Calendar.getInstance();
@@ -168,7 +185,6 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     public void salvarAluno(){
-        Aluno aluno = new Aluno();
         aluno.setRa(Integer.parseInt(edRaAluno.getText().toString()));
         aluno.setNome(edNomeAluno.getText().toString());
         aluno.setCpf(edCpfAluno.getText().toString());
@@ -260,5 +276,15 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         setDataAtual();
         return new DatePickerDialog(this, setDatePicker,
                 vAno, vMes, vDia);
+    }
+
+    private void popularCampos(Aluno aluno) {
+        edRaAluno.setText(String.valueOf(aluno.getRa()));
+        edNomeAluno.setText(aluno.getNome());
+        edCpfAluno.setText(aluno.getCpf());
+        edDtNascAluno.setText(aluno.getDtNasc());
+        edDtMatAluno.setText(aluno.getDtMatricula());
+        spTurma.setSelection(Util.getIndexFromSpinner(spTurma, aluno.getTurma().toString()));
+
     }
 }
