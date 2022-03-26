@@ -47,6 +47,16 @@ public class ProfessorDAO {
 
     }
 
+    public static List<Professor> getProfessoresByTurma(Long idTurma) {
+        List<Professor> list = new ArrayList<>();
+        try {
+            list = Professor.find(Professor.class, "turma = ?", idTurma.toString());
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao retornar lista de professores: " + ex.getMessage());
+        }
+        return list;
+    }
+
     public static List<Professor> retornaProfessoresSemDisciplinas() {
         return Professor.findWithQuery(Professor.class, "SELECT PROFESSOR.* FROM PROFESSOR LEFT JOIN " +
                 "DISCIPLINA ON PROFESSOR.ID = DISCIPLINA.PROFESSOR WHERE DISCIPLINA.PROFESSOR IS NULL");

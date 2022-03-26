@@ -12,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDisciplinaDAO;
+import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
+import com.example.controlenotasfrequencia.domain.NotasFrequencia;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -53,7 +57,6 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
 
     @Override
     public AlunoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_aluno, parent, false);
 
@@ -75,7 +78,15 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         holder.edDtNasc.setText(aluno.getDtNasc());
 
         holder.deletar.setOnClickListener(view -> {
-            //TODO DELETAR VINCULOS ANTES
+            List<NotasFrequencia> notasFrequenciaByAluno = NotasFrequenciaDAO.getNotasFrequenciaByAluno(aluno.getId());
+
+            if (!notasFrequenciaByAluno.isEmpty()) {
+                holder.deletar.setError("Não é possível remover o Aluno, pois possui notas lançadas.");
+                return;
+            }
+
+            List<AlunoDisciplina> alunoDisciplinaByAluno = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(aluno.getId());
+            AlunoDisciplinaDAO.deleteInBatch(alunoDisciplinaByAluno);
             AlunoDAO.delete(aluno);
         });
     }

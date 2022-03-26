@@ -121,11 +121,6 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
                 }
             }
 
-            private List<String> getListIdDisciplina(AlunoDisciplina alunoDisciplina) {
-                List<String> ids = new ArrayList<>();
-                return ids;
-            }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -169,6 +164,12 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
 
         if(edNota.getText().toString().equals("")){
             edNota.setError("Informe a Nota do Aluno!");
+            edNota.requestFocus();
+            return;
+        }
+
+        if(Double.parseDouble(edNota.getText().toString()) > 100.0){
+            edNota.setError("Informe uma nota valida!");
             edNota.requestFocus();
             return;
         }

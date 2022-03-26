@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,8 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
         TextInputEditText edAluno;
         TextInputEditText edResultado;
         TextInputEditText edFrequencia;
+        TextInputEditText edMediaFinal;
+        Button deletar;
 
         public NotasFrequenciaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +46,8 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
             edAluno = itemView.findViewById(R.id.edNomeAluno);
             edResultado = itemView.findViewById(R.id.edResultadoFinal);
             edFrequencia = itemView.findViewById(R.id.edFrequencia);
+            edMediaFinal = itemView.findViewById(R.id.edMedia);
+            deletar = itemView.findViewById(R.id.deletar);
         }
     }
 
@@ -57,16 +62,21 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
     @Override
     public void onBindViewHolder(@NonNull NotasFrequenciaViewHolder holder, int position) {
         Aluno aluno = listaAlunos.get(position);
-        List<NotasFrequencia> notasFrequencias = NotasFrequenciaDAO.retornaNotasFrequencia("aluno = " + aluno.getId(),
-                new String[]{}, "codigo asc");
+        List<NotasFrequencia> notasFrequencias = NotasFrequenciaDAO.getNotasFrequenciaByAluno(aluno.getId());
 
         Turma turma = TurmaDAO.getTurma(aluno.getTurma());
         holder.edTurma.setText(turma.getDescricao());
         holder.edAluno.setText(aluno.getNome());
         holder.edResultado.setText("Sem notas lançadas");
         holder.edFrequencia.setText("0%");
-
+        holder.edMediaFinal.setText("0.0");
         calculaMediaEFrequencia(holder, notasFrequencias);
+
+        holder.deletar.setOnClickListener(view -> {
+            if(!notasFrequencias.isEmpty()){
+                NotasFrequenciaDAO.deleteInBatch(notasFrequencias);
+            }
+        });
     }
 
     private void calculaMediaEFrequencia(@NonNull NotasFrequenciaViewHolder holder, List<NotasFrequencia> notasFrequencias) {
@@ -89,6 +99,7 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
             }
             holder.edResultado.setText("Reprovado");
             holder.edFrequencia.setText(Math.round(frequenciaFinal) + "%");
+            holder.edMediaFinal.setText(String.valueOf(mediaFinal));
         }
     }
 

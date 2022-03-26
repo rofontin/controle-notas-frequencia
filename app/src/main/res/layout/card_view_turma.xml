@@ -146,6 +146,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:id="@+id/deletar"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:text="Deletar"
                 />
 

@@ -10,9 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
+import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
 import com.example.controlenotasfrequencia.domain.Disciplina;
+import com.example.controlenotasfrequencia.domain.NotasFrequencia;
 import com.example.controlenotasfrequencia.domain.Professor;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -66,7 +70,15 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
         holder.edProfessor.setText(professor.getNome());
 
         holder.deletar.setOnClickListener(view -> {
-            //TODO DELETAR VINCULOS ANTES
+            List<NotasFrequencia> notasFrequenciaByDisciplina = NotasFrequenciaDAO.getNotasFrequenciaByDisciplina(disciplina.getId());
+
+            if (!notasFrequenciaByDisciplina.isEmpty()) {
+                holder.deletar.setError("Não é possível remover a Disciplina, pois possui notas lançadas.");
+                return;
+            }
+
+            List<AlunoDisciplina> alunoDisciplinaByDisciplina = AlunoDisciplinaDAO.getAlunoDisciplinaByDisciplina(disciplina.getId());
+            AlunoDisciplinaDAO.deleteInBatch(alunoDisciplinaByDisciplina);
             DisciplinaDAO.delete(disciplina);
         });
     }

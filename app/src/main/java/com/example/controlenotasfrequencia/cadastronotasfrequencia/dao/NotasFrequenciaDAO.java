@@ -3,7 +3,6 @@ package com.example.controlenotasfrequencia.cadastronotasfrequencia.dao;
 import android.util.Log;
 
 import com.example.controlenotasfrequencia.domain.NotasFrequencia;
-import com.example.controlenotasfrequencia.domain.Disciplina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,44 @@ public class NotasFrequenciaDAO {
         return list;
     }
 
+    public static List<NotasFrequencia> getNotasFrequenciaByAluno(Long idAluno) {
+        List<NotasFrequencia> list = new ArrayList<>();
+        try {
+            list = NotasFrequencia.find(NotasFrequencia.class, "aluno = ?", idAluno.toString());
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao retornar lista de Notas e frequencia: " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public static List<NotasFrequencia> getNotasFrequenciaByTurma(Long idTurma) {
+        List<NotasFrequencia> list = new ArrayList<>();
+        try {
+            list = NotasFrequencia.find(NotasFrequencia.class, "turma = ?", idTurma.toString());
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao retornar lista de Notas e frequencia: " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public static List<NotasFrequencia> getNotasFrequenciaByDisciplina(Long idDisciplina) {
+        List<NotasFrequencia> list = new ArrayList<>();
+        try {
+            list = NotasFrequencia.find(NotasFrequencia.class, "disciplina = ?", idDisciplina.toString());
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao retornar lista de Notas e frequencia: " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public static void deleteInBatch(List<NotasFrequencia> notasFrequencias) {
+        try {
+            NotasFrequencia.deleteInTx(notasFrequencias);
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao apagar as notas e frequencias: " + ex.getMessage());
+        }
+    }
+
     public static boolean delete(NotasFrequencia notasFrequencia){
         try{
             return NotasFrequencia.delete(notasFrequencia);
@@ -45,6 +82,5 @@ public class NotasFrequenciaDAO {
             Log.e("Erro", "Erro ao apagar as notas e frequencia: "+ex.getMessage());
             return false;
         }
-
     }
 }

@@ -3,7 +3,6 @@ package com.example.controlenotasfrequencia.cadastroaluno.dao;
 import android.util.Log;
 
 import com.example.controlenotasfrequencia.domain.Aluno;
-import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,16 @@ public class AlunoDAO {
         return list;
     }
 
+    public static List<Aluno> getAlunoByTurma(Long idTurma) {
+        List<Aluno> list = new ArrayList<>();
+        try {
+            list = Aluno.find(Aluno.class, "turma = ?", idTurma.toString());
+        } catch (Exception ex) {
+            Log.e("Erro", "Erro ao retornar lista de alunos: " + ex.getMessage());
+        }
+        return list;
+    }
+
     public static boolean delete(Aluno aluno){
         try{
             return Aluno.delete(aluno);
@@ -45,6 +54,5 @@ public class AlunoDAO {
             Log.e("Erro", "Erro ao apagar o aluno: "+ex.getMessage());
             return false;
         }
-
     }
 }

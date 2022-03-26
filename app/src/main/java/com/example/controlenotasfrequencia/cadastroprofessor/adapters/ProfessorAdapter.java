@@ -89,7 +89,11 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         holder.edDtNasc.setText(professor.getDtNasc());
 
         holder.deletar.setOnClickListener(view -> {
-            //TODO DELETAR VINCULOS ANTES
+            if(disciplina.isPresent()){
+                holder.deletar.setError("Não é possível remover o professor, " +
+                        "pois possui vínculo com Disciplina: " + disciplina.get().getNome());
+                return;
+            }
             ProfessorDAO.delete(professor);
         });
     }

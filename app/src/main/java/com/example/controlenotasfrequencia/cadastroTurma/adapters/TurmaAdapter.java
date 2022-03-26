@@ -11,6 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
+import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
+import com.example.controlenotasfrequencia.domain.NotasFrequencia;
+import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -71,9 +77,29 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         holder.edDtTermino.setText(turma.getDtTermino());
 
         holder.deletar.setOnClickListener(view -> {
-            //TODO DELETAR VINCULOS ANTES
-            TurmaDAO.delete(turma);
+            validateAndDelete(holder, turma);
         });
+    }
+
+    private void validateAndDelete(@NonNull TurmaViewHolder holder, Turma turma) {
+        List<NotasFrequencia> notasFrequenciaByAluno = NotasFrequenciaDAO.getNotasFrequenciaByTurma(turma.getId());
+        if (!notasFrequenciaByAluno.isEmpty()) {
+            holder.deletar.setError("Não é possível remover a Turma, pois possui notas lançadas.");
+            return;
+        }
+
+        List<Aluno> alunoByTurma = AlunoDAO.getAlunoByTurma(turma.getId());
+        if (!alunoByTurma.isEmpty()) {
+            holder.deletar.setError("Não é possível remover a Turma, pois possui Alunos vinculados.");
+            return;
+        }
+
+        List<Professor> professoresByTurma = ProfessorDAO.getProfessoresByTurma(turma.getId());
+        if (!professoresByTurma.isEmpty()) {
+            holder.deletar.setError("Não é possível remover a Turma, pois possui Professores vinculados.");
+            return;
+        }
+        TurmaDAO.delete(turma);
     }
 
     @Override
