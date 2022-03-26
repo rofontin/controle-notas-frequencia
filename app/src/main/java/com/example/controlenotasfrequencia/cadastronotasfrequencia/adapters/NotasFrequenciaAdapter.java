@@ -31,6 +31,11 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
         this.context = context;
     }
 
+    public void delete(int position){
+        listaAlunos.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public static class NotasFrequenciaViewHolder extends RecyclerView.ViewHolder {
         TextInputEditText edTurma;
         TextInputEditText edAluno;
@@ -75,6 +80,7 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
         holder.deletar.setOnClickListener(view -> {
             if(!notasFrequencias.isEmpty()){
                 NotasFrequenciaDAO.deleteInBatch(notasFrequencias);
+                notifyItemRemoved(position);
             }
         });
     }
@@ -94,10 +100,12 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
             double mediaFinal = media / notasFrequencias.size();
             float frequenciaFinal = ((frequencia * 100 ) / frequenciaTotal);
 
-            if(mediaFinal >= 7.0 && frequenciaFinal >= 3.0){
+            if(mediaFinal >= 70.0 && frequenciaFinal >= 30.0){
                 holder.edResultado.setText("Aprovado");
+            } else {
+                holder.edResultado.setText("Reprovado");
             }
-            holder.edResultado.setText("Reprovado");
+
             holder.edFrequencia.setText(Math.round(frequenciaFinal) + "%");
             holder.edMediaFinal.setText(String.valueOf(mediaFinal));
         }

@@ -1,18 +1,21 @@
 package com.example.controlenotasfrequencia.cadastroaluno.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDisciplinaDAO;
+import com.example.controlenotasfrequencia.cadastronotasfrequencia.ListaNotasFrequenciaActivity;
 import com.example.controlenotasfrequencia.cadastronotasfrequencia.dao.NotasFrequenciaDAO;
 import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.AlunoDisciplina;
@@ -30,6 +33,11 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
     public AlunoAdapter(List<Aluno> listaAlunos, Context context) {
         this.listaAlunos = listaAlunos;
         this.context = context;
+    }
+
+    public void delete(int position){
+        listaAlunos.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class AlunoViewHolder extends RecyclerView.ViewHolder {
@@ -88,6 +96,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             List<AlunoDisciplina> alunoDisciplinaByAluno = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(aluno.getId());
             AlunoDisciplinaDAO.deleteInBatch(alunoDisciplinaByAluno);
             AlunoDAO.delete(aluno);
+            delete(position);
         });
     }
 

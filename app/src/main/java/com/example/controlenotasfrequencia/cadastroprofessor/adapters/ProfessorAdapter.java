@@ -33,6 +33,11 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         this.context = context;
     }
 
+    public void delete(int position){
+        listaProfessores.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public static class ProfessorViewHolder extends RecyclerView.ViewHolder {
         TextInputEditText edRegistro;
         TextInputEditText edNomeProfessor;
@@ -95,6 +100,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
                 return;
             }
             ProfessorDAO.delete(professor);
+            delete(position);
         });
     }
 

@@ -24,11 +24,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:hint="@string/turma">
+                android:hint="@string/aluno">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edTurma"
+                    android:id="@+id/edNomeAluno"
                     android:focusable="false"
                     android:backgroundTint="@color/white"/>
             </com.google.android.material.textfield.TextInputLayout>,
@@ -44,11 +44,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:hint="@string/aluno">
+                    android:hint="@string/turma">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edNomeAluno"
+                        android:id="@+id/edTurma"
                         android:focusable="false"
                         android:backgroundTint="@color/white"/>
                 </com.google.android.material.textfield.TextInputLayout>

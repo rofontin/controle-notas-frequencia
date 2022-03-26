@@ -1,6 +1,7 @@
 package com.example.controlenotasfrequencia.cadastronotasfrequencia;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import com.example.controlenotasfrequencia.util.Util;
 
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ListaNotasFrequenciaActivity extends AppCompatActivity {
 
     private LinearLayout lnListaNotasFrequencia;

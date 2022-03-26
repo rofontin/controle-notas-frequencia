@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -173,23 +174,30 @@ public class CadastroNotasFrequenciaActivity extends AppCompatActivity {
             edNota.requestFocus();
             return;
         }
-        salvarDisciplina();
+        salvarNotasFrequencia();
     }
 
-    public void salvarDisciplina(){
-        NotasFrequencia notasFrequencia = new NotasFrequencia();
-        notasFrequencia.setTurma(turmaSelecionada.getId());
-        notasFrequencia.setDisciplina(disciplinaSelecionada.getId());
-        notasFrequencia.setAluno(alunoSelecionado.getId());
-        notasFrequencia.setFrequencia(Integer.parseInt(edFrequencia.getText().toString()));
-        notasFrequencia.setNota(Double.valueOf(edNota.getText().toString()));
+    public void salvarNotasFrequencia(){
+        Optional<NotasFrequencia> notasFrequenciaExistente = NotasFrequenciaDAO.retornaNotasFrequencia("turma = ? and disciplina = ? and aluno = ?",
+                turmaSelecionada.getId().toString(), disciplinaSelecionada.getId().toString(), alunoSelecionado.getId().toString()).stream().findFirst();
 
-        if(NotasFrequenciaDAO.salvar(notasFrequencia) > 0) {
-            setResult(RESULT_OK);
-            finish();
-        }else
-            Util.customSnackBar(lnNotasFrequencia, "erro ao salvar a nota e a disciplina do aluno ("+notasFrequencia.getAluno()+") " +
-                    "verifique o log", 0);
+        if(!notasFrequenciaExistente.isPresent()){
+            NotasFrequencia notasFrequencia = new NotasFrequencia();
+            notasFrequencia.setTurma(turmaSelecionada.getId());
+            notasFrequencia.setDisciplina(disciplinaSelecionada.getId());
+            notasFrequencia.setAluno(alunoSelecionado.getId());
+            notasFrequencia.setFrequencia(Integer.parseInt(edFrequencia.getText().toString()));
+            notasFrequencia.setNota(Double.valueOf(edNota.getText().toString()));
+
+            if(NotasFrequenciaDAO.salvar(notasFrequencia) > 0) {
+                setResult(RESULT_OK);
+                finish();
+            }else
+                Util.customSnackBar(lnNotasFrequencia, "erro ao salvar a nota e a disciplina do aluno ("+notasFrequencia.getAluno()+") " +
+                        "verifique o log", 0);
+        } else {
+            Util.customSnackBar(lnNotasFrequencia, "Esse Aluno já possui notas e frenquência salvas para essa disciplina", 0);
+        }
     }
 
     @Override

@@ -18,19 +18,10 @@ public class NotasFrequenciaDAO {
         }
     }
 
-    public static NotasFrequencia getDisciplina(int id){
-        try{
-            return NotasFrequencia.findById(NotasFrequencia.class, id);
-        }catch (Exception ex){
-            Log.e("Erro", "Erro ao retornar as notas e frequencia "+ex.getMessage());
-            return null;
-        }
-    }
-
-    public static List<NotasFrequencia> retornaNotasFrequencia(String where, String[]whereArgs, String orderBy){
+    public static List<NotasFrequencia> retornaNotasFrequencia(String where, String... whereArgs){
         List<NotasFrequencia> list = new ArrayList<>();
         try{
-            list = NotasFrequencia.find(NotasFrequencia.class, where, whereArgs, "", orderBy, "");
+            list = NotasFrequencia.find(NotasFrequencia.class, where, whereArgs);
         }catch (Exception ex){
             Log.e("Erro", "Erro ao retornar lista de Notas e frequencia: "+ex.getMessage());
         }

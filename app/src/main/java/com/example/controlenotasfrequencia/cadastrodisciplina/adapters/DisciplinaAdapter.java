@@ -32,6 +32,11 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
         this.context = context;
     }
 
+    public void delete(int position){
+        listaDisciplina.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public static class DisciplinaViewHolder extends RecyclerView.ViewHolder {
         TextInputEditText edCodigoDiscilplina;
         TextInputEditText edNomeDisciplina;
@@ -62,7 +67,7 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
     public void onBindViewHolder(@NonNull DisciplinaViewHolder holder, int position) {
         Disciplina disciplina = listaDisciplina.get(position);
 
-        holder.edCargaHoraria.setText(disciplina.getCargaHoraria());
+        holder.edCargaHoraria.setText(String.valueOf(disciplina.getCargaHoraria()));
         holder.edCodigoDiscilplina.setText(String.valueOf(disciplina.getCodigo()));
         holder.edNomeDisciplina.setText(disciplina.getNome());
 
@@ -80,6 +85,7 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
             List<AlunoDisciplina> alunoDisciplinaByDisciplina = AlunoDisciplinaDAO.getAlunoDisciplinaByDisciplina(disciplina.getId());
             AlunoDisciplinaDAO.deleteInBatch(alunoDisciplinaByDisciplina);
             DisciplinaDAO.delete(disciplina);
+            delete(position);
         });
     }
 

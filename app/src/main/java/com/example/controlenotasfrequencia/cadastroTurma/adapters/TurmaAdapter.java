@@ -32,6 +32,11 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         this.context = context;
     }
 
+    public void delete(int position){
+        listaTurma.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public static class TurmaViewHolder extends RecyclerView.ViewHolder {
         TextInputEditText edCodigo;
         TextInputEditText edDescricao;
@@ -77,11 +82,11 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         holder.edDtTermino.setText(turma.getDtTermino());
 
         holder.deletar.setOnClickListener(view -> {
-            validateAndDelete(holder, turma);
+            validateAndDelete(holder, turma, position);
         });
     }
 
-    private void validateAndDelete(@NonNull TurmaViewHolder holder, Turma turma) {
+    private void validateAndDelete(@NonNull TurmaViewHolder holder, Turma turma, int position) {
         List<NotasFrequencia> notasFrequenciaByAluno = NotasFrequenciaDAO.getNotasFrequenciaByTurma(turma.getId());
         if (!notasFrequenciaByAluno.isEmpty()) {
             holder.deletar.setError("Não é possível remover a Turma, pois possui notas lançadas.");
@@ -100,6 +105,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
             return;
         }
         TurmaDAO.delete(turma);
+        delete(position);
     }
 
     @Override
