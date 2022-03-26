@@ -31,6 +31,8 @@ import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import java.util.Calendar;
 import java.util.List;
@@ -122,6 +124,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void validaCampos(){
         if(edRaAluno.getText().toString().equals("")){
