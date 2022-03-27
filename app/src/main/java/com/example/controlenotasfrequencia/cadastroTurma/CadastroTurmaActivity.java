@@ -90,8 +90,7 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         spTurno = findViewById(R.id.spTurnoTurma);
         spPeriodo = findViewById(R.id.spPeriodoTurma);
 
-        spPeriodo.setVisibility(View.GONE);
-        spTurno.setVisibility(View.GONE);
+
 
 
         String[] regimes = new String[]{Regime.ANUAL.toString(), Regime.SEMESTRAL.toString()};
@@ -109,7 +108,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
                 String[] periodos = new String[]{};
                 if (i != -1) {
                     if (regimes[i].equals(Regime.SEMESTRAL.toString())) {
-                        spPeriodo.setVisibility(View.VISIBLE);
                         periodos = new String[]{Periodo.SEMESTRE_1.toString(), Periodo.SEMESTRE_2.toString()};
                     } else {
                         spPeriodo.setVisibility(View.VISIBLE);
@@ -119,9 +117,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
 
                 }
                 spPeriodo.setAdapter(new ArrayAdapter(CadastroTurmaActivity.this, android.R.layout.simple_list_item_1, periodos));
-                if (i == -1) {
-                    spPeriodo.setVisibility(View.GONE);
-                }
             }
 
             @Override
@@ -129,24 +124,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
 
             }
 
-        });
-
-        spPeriodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != -1) {
-                    spTurno.setVisibility(View.VISIBLE);
-                }
-
-                if (i == -1) {
-                    spTurno.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
         });
     }
 
@@ -282,9 +259,11 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         edDescricao.setText(turma.getDescricao());
         edDtInicio.setText(turma.getDtInicio());
         edDtTermino.setText(turma.getDtTermino());
-        spRegime.setSelection((int) Long.parseLong(turma.getRegime().toString()));
-        spPeriodo.setSelection((int) Long.parseLong(turma.getPeriodo().toString()));
-        spTurno.setSelection((int) Long.parseLong(turma.getTurno().toString()));
+        spRegime.setSelection(Util.getIndexFromSpinner(spRegime, turma.getRegime().toString()));
+        spPeriodo.setSelection(Util.getIndexFromSpinner(spPeriodo, turma.getPeriodo().toString()));
+        spTurno.setSelection(Util.getIndexFromSpinner(spTurno, turma.getTurno().toString()));
+
+
 
     }
 }

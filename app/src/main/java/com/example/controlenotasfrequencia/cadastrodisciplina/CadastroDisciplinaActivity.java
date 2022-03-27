@@ -25,6 +25,7 @@ import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -77,7 +78,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         spProfessor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i >= 0) {
+
+                if (professores.size()>0 && i >= 0) {
                     profSelecionado = professores.get(i);
                 }
             }

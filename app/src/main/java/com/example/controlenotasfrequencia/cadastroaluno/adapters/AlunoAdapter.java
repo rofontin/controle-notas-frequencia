@@ -32,11 +32,8 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
 
     private final List<Aluno> listaAlunos;
     private Context context;
-<<<<<<< Updated upstream
     private OnAlunoListener mOnAlunoListener;
-=======
     private ArrayList<Aluno> listaAluno = new ArrayList<>();
->>>>>>> Stashed changes
 
     public AlunoAdapter(List<Aluno> listaAlunos, OnAlunoListener onAlunoListener, Context context) {
         this.listaAlunos = listaAlunos;
@@ -44,12 +41,12 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         this.mOnAlunoListener = onAlunoListener;
     }
 
-    public void delete(int position){
+    public void delete(int position) {
         listaAlunos.remove(position);
         notifyItemRemoved(position);
     }
 
-    public static class AlunoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class AlunoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextInputEditText edRaAluno;
         TextInputEditText edNomeAluno;
         TextInputEditText edCpfAluno;
@@ -58,9 +55,9 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         TextInputEditText edDtNasc;
         Button deletar;
         CardView cardAluno;
-        OnAlunoListener onAlunoListener;
 
         OnAlunoListener onAlunoListener;
+
 
         @SuppressLint("ResourceType")
         public AlunoViewHolder(@NonNull View itemView, OnAlunoListener onAlunoListener) {
@@ -75,7 +72,6 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             edDtMatricula = itemView.findViewById(R.id.edDtMatricula);
             edDtNasc = itemView.findViewById(R.id.edDtNascAluno);
             deletar = itemView.findViewById(R.id.deletar);
-<<<<<<< Updated upstream
 
             edRaAluno.setOnClickListener(this);
             edNomeAluno.setOnClickListener(this);
@@ -84,22 +80,20 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             edDtMatricula.setOnClickListener(this);
             edDtNasc.setOnClickListener(this);
 
-=======
+
             cardAluno = itemView.findViewById(R.layout.card_view_aluno);
             this.onAlunoListener = onAlunoListener;
 
->>>>>>> Stashed changes
+
             itemView.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
-<<<<<<< Updated upstream
+
+
             onAlunoListener.onAlunoClick(getAdapterPosition());
-=======
-            onAlunoListener.onAlunoClick(getAdapterPosition() );
->>>>>>> Stashed changes
         }
     }
 
@@ -148,12 +142,8 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         return listaAlunos.size();
     }
 
-    public interface OnAlunoListener{
+    public interface OnAlunoListener {
         void onAlunoClick(int position);
     }
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 }

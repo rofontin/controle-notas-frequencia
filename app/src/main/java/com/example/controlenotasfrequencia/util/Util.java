@@ -30,5 +30,13 @@ public class Util {
 
         snackbar.show();
     }
+    public static int getIndexFromSpinner(Spinner spinner, String myString) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
+                return i + 1;
+            }
+        }
 
+        return 0;
+    }
 }
