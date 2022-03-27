@@ -260,10 +260,8 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         edDtInicio.setText(turma.getDtInicio());
         edDtTermino.setText(turma.getDtTermino());
         spRegime.setSelection(Util.getIndexFromSpinner(spRegime, turma.getRegime().toString()));
-        spPeriodo.setSelection(Util.getIndexFromSpinner(spPeriodo, turma.getPeriodo().toString()));
+        spPeriodo.setSelection(Util.getIndexFromSpinner(spPeriodo, Periodo.fromString(turma.getPeriodo().toString()).toString()));
         spTurno.setSelection(Util.getIndexFromSpinner(spTurno, turma.getTurno().toString()));
-
-
 
     }
 }

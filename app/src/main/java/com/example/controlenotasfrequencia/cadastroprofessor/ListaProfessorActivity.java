@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroaluno.CadastroAlunoActivity;
 import com.example.controlenotasfrequencia.cadastroprofessor.adapters.ProfessorAdapter;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
 import com.example.controlenotasfrequencia.domain.Professor;
@@ -22,9 +23,11 @@ import com.example.controlenotasfrequencia.util.Util;
 
 import java.util.List;
 
-public class ListaProfessorActivity extends AppCompatActivity {
+public class ListaProfessorActivity extends AppCompatActivity implements ProfessorAdapter.OnProfessorListener {
 
     private LinearLayout lnLista;
+    private List<Professor> listaProfessores;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +40,11 @@ public class ListaProfessorActivity extends AppCompatActivity {
     }
 
     public void atualizaListaProfessor() {
-        List<Professor> listaProfessores = ProfessorDAO.retornaProfessores("", new String[]{}, "nome asc");
+        listaProfessores = ProfessorDAO.getAll("", new String[]{}, "nome asc");
         Log.e("PHS", "Tamanho da lista: " + listaProfessores.size());
 
         RecyclerView rvListaProfessores = findViewById(R.id.rvListaProfessor);
-        ProfessorAdapter adapter = new ProfessorAdapter(listaProfessores, this);
+        ProfessorAdapter adapter = new ProfessorAdapter(listaProfessores, this, this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaProfessores.setLayoutManager(llm);
         rvListaProfessores.setAdapter(adapter);
@@ -76,5 +79,12 @@ public class ListaProfessorActivity extends AppCompatActivity {
             Util.customSnackBar(lnLista, "Professor salvo com sucesso!", 1);
         }
         atualizaListaProfessor();
+    }
+
+    @Override
+    public void onProfessorClick(int position) {
+        Intent intent = new Intent(this, CadastroProfessorActivity.class);
+        intent.putExtra("nome", listaProfessores.get(position).getNome());
+        startActivityForResult(intent, 1);
     }
 }

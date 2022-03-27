@@ -41,6 +41,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     private MaterialSpinner spProfessor;
     private Professor profSelecionado;
     private Disciplina disciplina;
+    private List<Professor> professores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
 
     private void iniciaSpinners() {
         spProfessor = findViewById(R.id.spProfessor);
-        List<Professor> professores = ProfessorDAO.retornaProfessoresSemDisciplinas();
+        professores = ProfessorDAO.retornaProfessoresSemDisciplinas();
 
         spProfessor.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, professores));
@@ -175,6 +176,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         edCodigoDisciplina.setText(String.valueOf(disciplina.getCodigo()));
         edNomeDisciplina.setText(disciplina.getNome());
         edCargaHoraria.setText(String.valueOf(disciplina.getCargaHoraria()));
+        Professor professor = ProfessorDAO.getProfessor(disciplina.getProfessor());
+        professores.add(professor);
         spProfessor.setSelection(Integer.parseInt(disciplina.getProfessor().toString()));
     }
 }
