@@ -284,7 +284,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         edCpfAluno.setText(aluno.getCpf());
         edDtNascAluno.setText(aluno.getDtNasc());
         edDtMatAluno.setText(aluno.getDtMatricula());
-        spTurma.setSelection(Util.getIndexFromSpinner(spTurma, aluno.getTurma().toString()));
+        spTurma.setSelection(Integer.parseInt(aluno.getTurma().toString()));
 
     }
 }

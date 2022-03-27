@@ -26,10 +26,12 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
 
     private final List<Disciplina> listaDisciplina;
     private Context context;
+    private OnDisciplinaListener mOnDisciplinaListener;
 
-    public DisciplinaAdapter(List<Disciplina> listaDisciplina, Context context){
+    public DisciplinaAdapter(List<Disciplina> listaDisciplina, Context context, OnDisciplinaListener onDisciplinaListener){
         this.listaDisciplina = listaDisciplina;
         this.context = context;
+        this.mOnDisciplinaListener = onDisciplinaListener;
     }
 
     public void delete(int position){
@@ -37,21 +39,37 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
         notifyItemRemoved(position);
     }
 
-    public static class DisciplinaViewHolder extends RecyclerView.ViewHolder {
+    public static class DisciplinaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextInputEditText edCodigoDiscilplina;
         TextInputEditText edNomeDisciplina;
         TextInputEditText edCargaHoraria;
         TextInputEditText edProfessor;
         Button deletar;
 
-        public DisciplinaViewHolder(@NonNull View itemView) {
+        OnDisciplinaListener onDisciplinaListener;
+
+        public DisciplinaViewHolder(@NonNull View itemView, OnDisciplinaListener onDisciplinaListener) {
             super(itemView);
+            this.onDisciplinaListener = onDisciplinaListener;
 
             edCodigoDiscilplina = itemView.findViewById(R.id.edCodigoDisciplina);
             edNomeDisciplina = itemView.findViewById(R.id.edNomeDisciplina);
             edCargaHoraria = itemView.findViewById(R.id.edCargaHoraria);
             edProfessor = itemView.findViewById(R.id.edProfessor);
             deletar = itemView.findViewById(R.id.deletar);
+
+            edCodigoDiscilplina.setOnClickListener(this);
+            edNomeDisciplina.setOnClickListener(this);
+            edCargaHoraria.setOnClickListener(this);
+            edProfessor.setOnClickListener(this);
+
+            itemView.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            onDisciplinaListener.onDisciplinalick(getAdapterPosition());
         }
     }
     @NonNull
@@ -60,7 +78,7 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_disciplina, parent, false);
 
-        return new DisciplinaViewHolder(view);
+        return new DisciplinaViewHolder(view, mOnDisciplinaListener);
     }
 
     @Override
@@ -92,5 +110,9 @@ public class DisciplinaAdapter extends RecyclerView.Adapter<DisciplinaAdapter.Di
     @Override
     public int getItemCount() {
         return listaDisciplina.size();
+    }
+
+    public interface OnDisciplinaListener{
+        void onDisciplinalick(int position);
     }
 }

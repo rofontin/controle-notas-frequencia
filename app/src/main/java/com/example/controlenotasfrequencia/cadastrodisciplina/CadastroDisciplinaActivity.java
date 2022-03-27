@@ -1,5 +1,6 @@
 package com.example.controlenotasfrequencia.cadastrodisciplina;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,8 +16,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.util.Util;
@@ -36,6 +39,7 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     private LinearLayout lnDisciplina;
     private MaterialSpinner spProfessor;
     private Professor profSelecionado;
+    private Disciplina disciplina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,18 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         profSelecionado = null;
 
         iniciaSpinners();
+
+        Intent iin = getIntent();
+
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            String nome = (String) b.get("nome");
+            disciplina = DisciplinaDAO.getByNome(nome);
+            popularCampos(disciplina);
+        } else {
+            disciplina = new Disciplina();
+        }
     }
 
     private void iniciaSpinners() {
@@ -113,7 +129,6 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     }
 
     public void salvarDisciplina() {
-        Disciplina disciplina = new Disciplina();
         disciplina.setCodigo(Integer.parseInt(edCodigoDisciplina.getText().toString()));
         disciplina.setNome(edNomeDisciplina.getText().toString());
         disciplina.setCargaHoraria(Integer.parseInt(edCargaHoraria.getText().toString()));
@@ -153,5 +168,11 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void popularCampos(Disciplina disciplina) {
+        edCodigoDisciplina.setText(String.valueOf(disciplina.getCodigo()));
+        edNomeDisciplina.setText(disciplina.getNome());
+        edCargaHoraria.setText(String.valueOf(disciplina.getCargaHoraria()));
+        spProfessor.setSelection(Integer.parseInt(disciplina.getProfessor().toString()));
     }
 }
