@@ -1,5 +1,8 @@
 # controle-notas-frequencia
 
+Alunos: Riquelmy De Oliveira Fontin, RA: 00226020
+Thiago Henrique Crestani, RA: 00226021
+
 Desenvolver um APP para controle de notas e frequencia
 
 deverá conter as seguintes funcionalidades:
