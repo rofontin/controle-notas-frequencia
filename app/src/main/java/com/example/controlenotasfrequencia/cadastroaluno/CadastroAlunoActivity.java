@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Selection;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,8 +32,6 @@ import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.Calendar;
 import java.util.List;
@@ -62,7 +59,6 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private int vDia;
     private View dataSelecionada;
     private Aluno aluno;
-    private Disciplina disciplina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +82,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         setDataAtual();
 
         Intent iin = getIntent();
-        
+
         Bundle b = iin.getExtras();
 
         if (b != null) {
@@ -107,9 +103,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     private void iniciaSpinners(){
-
         spDisciplina.setVisibility(View.GONE);
-
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
         List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
@@ -121,7 +115,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         spDisciplina.setAdapterWithOutImage(this, nomesDisciplinas, list -> this.disciplinas = list);
         spDisciplina.initMultiSpinner(this, spDisciplina);
-
+        spDisciplina.setHint("Disciplinas");
 
         spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -207,6 +201,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private void salvaRelacionamentoAlunoDisciplina(long idAluno) {
         this.disciplinas.forEach(nome -> {
             Optional<Disciplina> disciplina = DisciplinaDAO.retornaDisciplina("nome = ?", nome).stream().findFirst();
+            List<AlunoDisciplina> alunoDisciplinaByAluno = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(idAluno);
+            AlunoDisciplinaDAO.deleteInBatch(alunoDisciplinaByAluno);
 
             if(disciplina.isPresent()){
                 AlunoDisciplina alunoDisciplina = new AlunoDisciplina(idAluno, disciplina.get().getId());
@@ -285,6 +281,5 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         edDtNascAluno.setText(aluno.getDtNasc());
         edDtMatAluno.setText(aluno.getDtMatricula());
         spTurma.setSelection(Integer.parseInt(aluno.getTurma().toString()));
-
     }
 }
