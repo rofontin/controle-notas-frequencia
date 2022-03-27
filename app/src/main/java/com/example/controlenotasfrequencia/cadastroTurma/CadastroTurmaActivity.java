@@ -2,6 +2,7 @@ package com.example.controlenotasfrequencia.cadastroTurma;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,8 @@ import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
 import com.example.controlenotasfrequencia.cadastroTurma.enumTurma.Periodo;
 import com.example.controlenotasfrequencia.cadastroTurma.enumTurma.Regime;
 import com.example.controlenotasfrequencia.cadastroTurma.enumTurma.Turno;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
@@ -38,6 +41,7 @@ public class CadastroTurmaActivity extends AppCompatActivity {
     private MaterialSpinner spRegime;
     private MaterialSpinner spPeriodo;
     private LinearLayout lnPrincipal;
+    private Turma turma;
 
     private int vAno;
     private int vMes;
@@ -66,6 +70,18 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         iniciaSpinners();
 
         setDataAtual();
+
+        Intent iin = getIntent();
+
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            int codigo = (int) b.get("codigo");
+            turma = TurmaDAO.getByCodigo(codigo);
+            popularCampos(turma);
+        } else {
+            turma = new Turma();
+        }
     }
 
     private void iniciaSpinners() {
@@ -74,8 +90,7 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         spTurno = findViewById(R.id.spTurnoTurma);
         spPeriodo = findViewById(R.id.spPeriodoTurma);
 
-        spPeriodo.setVisibility(View.GONE);
-        spTurno.setVisibility(View.GONE);
+
 
 
         String[] regimes = new String[]{Regime.ANUAL.toString(), Regime.SEMESTRAL.toString()};
@@ -93,7 +108,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
                 String[] periodos = new String[]{};
                 if (i != -1) {
                     if (regimes[i].equals(Regime.SEMESTRAL.toString())) {
-                        spPeriodo.setVisibility(View.VISIBLE);
                         periodos = new String[]{Periodo.SEMESTRE_1.toString(), Periodo.SEMESTRE_2.toString()};
                     } else {
                         spPeriodo.setVisibility(View.VISIBLE);
@@ -103,9 +117,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
 
                 }
                 spPeriodo.setAdapter(new ArrayAdapter(CadastroTurmaActivity.this, android.R.layout.simple_list_item_1, periodos));
-                if (i == -1) {
-                    spPeriodo.setVisibility(View.GONE);
-                }
             }
 
             @Override
@@ -113,24 +124,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
 
             }
 
-        });
-
-        spPeriodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != -1) {
-                    spTurno.setVisibility(View.VISIBLE);
-                }
-
-                if (i == -1) {
-                    spTurno.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
         });
     }
 
@@ -188,7 +181,6 @@ public class CadastroTurmaActivity extends AppCompatActivity {
     }
 
     public void salvarTurma() {
-        Turma turma = new Turma();
         turma.setCodigo(Integer.parseInt(edCodigo.getText().toString()));
         turma.setDescricao(edDescricao.getText().toString());
         turma.setDtInicio(edDtInicio.getText().toString());
@@ -260,5 +252,16 @@ public class CadastroTurmaActivity extends AppCompatActivity {
         setDataAtual();
         return new DatePickerDialog(this, setDatePicker,
                 vAno, vMes, vDia);
+    }
+
+    private void popularCampos(Turma turma) {
+        edCodigo.setText(String.valueOf(turma.getCodigo()));
+        edDescricao.setText(turma.getDescricao());
+        edDtInicio.setText(turma.getDtInicio());
+        edDtTermino.setText(turma.getDtTermino());
+        spRegime.setSelection(Util.getIndexFromSpinner(spRegime, turma.getRegime().toString()));
+        spPeriodo.setSelection(Util.getIndexFromSpinner(spPeriodo, Periodo.fromString(turma.getPeriodo().toString()).toString()));
+        spTurno.setSelection(Util.getIndexFromSpinner(spTurno, turma.getTurno().toString()));
+
     }
 }

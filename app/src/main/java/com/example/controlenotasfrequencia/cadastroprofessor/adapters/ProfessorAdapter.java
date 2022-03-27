@@ -27,10 +27,12 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
 
     private final List<Professor> listaProfessores;
     private Context context;
+    private OnProfessorListener mOnProfessorListener;
 
-    public ProfessorAdapter(List<Professor> listaProfessores, Context context) {
+    public ProfessorAdapter(List<Professor> listaProfessores, Context context, OnProfessorListener onProfessorListener) {
         this.listaProfessores = listaProfessores;
         this.context = context;
+        this.mOnProfessorListener = onProfessorListener;
     }
 
     public void delete(int position){
@@ -38,7 +40,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         notifyItemRemoved(position);
     }
 
-    public static class ProfessorViewHolder extends RecyclerView.ViewHolder {
+    public static class ProfessorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextInputEditText edRegistro;
         TextInputEditText edNomeProfessor;
         TextInputEditText edCpfProfessor;
@@ -48,7 +50,8 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         TextInputEditText edDtNasc;
         Button deletar;
 
-        public ProfessorViewHolder(@NonNull View itemView) {
+        OnProfessorListener onProfessorListener;
+        public ProfessorViewHolder(@NonNull View itemView, OnProfessorListener onProfessorListener) {
             super(itemView);
 
             edRegistro = itemView.findViewById(R.id.edRegistro);
@@ -59,6 +62,23 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
             edDtAdesao = itemView.findViewById(R.id.edDtAdesaoProfessor);
             edDtNasc = itemView.findViewById(R.id.edDtNascProfessor);
             deletar = itemView.findViewById(R.id.deletar);
+
+            edRegistro.setOnClickListener(this);
+            edNomeProfessor.setOnClickListener(this);
+            edCpfProfessor.setOnClickListener(this);
+            edDisciplina.setOnClickListener(this);
+            edTurma.setOnClickListener(this);
+            edDtAdesao.setOnClickListener(this);
+            edDtNasc.setOnClickListener(this);
+
+            this.onProfessorListener = onProfessorListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onProfessorListener.onProfessorClick(getAdapterPosition());
         }
     }
 
@@ -67,7 +87,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_professor, parent, false);
 
-        return new ProfessorAdapter.ProfessorViewHolder(view);
+        return new ProfessorAdapter.ProfessorViewHolder(view,mOnProfessorListener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -107,5 +127,9 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
     @Override
     public int getItemCount() {
         return listaProfessores.size();
+    }
+
+    public interface OnProfessorListener {
+        void onProfessorClick(int position);
     }
 }

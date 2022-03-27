@@ -100,10 +100,14 @@ public class NotasFrequenciaAdapter extends RecyclerView.Adapter<NotasFrequencia
             double mediaFinal = media / notasFrequencias.size();
             float frequenciaFinal = ((frequencia * 100 ) / frequenciaTotal);
 
-            if(mediaFinal >= 70.0 && frequenciaFinal >= 30.0){
-                holder.edResultado.setText("Aprovado");
+            if(mediaFinal >= 70.0){
+                if(frequenciaFinal >= 30.0){
+                    holder.edResultado.setText("Aprovado");
+                } else{
+                    holder.edResultado.setText("Reprovado por falta.");
+                }
             } else {
-                holder.edResultado.setText("Reprovado");
+                holder.edResultado.setText("Reprovado por Nota");
             }
 
             holder.edFrequencia.setText(Math.round(frequenciaFinal) + "%");

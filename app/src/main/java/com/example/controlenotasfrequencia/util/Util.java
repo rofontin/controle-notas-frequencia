@@ -1,7 +1,10 @@
 package com.example.controlenotasfrequencia.util;
 
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.example.controlenotasfrequencia.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,5 +30,13 @@ public class Util {
 
         snackbar.show();
     }
+    public static int getIndexFromSpinner(Spinner spinner, String myString) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
+                return i + 1;
+            }
+        }
 
+        return 0;
+    }
 }

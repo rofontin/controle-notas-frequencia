@@ -1,5 +1,6 @@
 package com.example.controlenotasfrequencia.cadastrodisciplina;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +16,16 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,6 +40,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     private LinearLayout lnDisciplina;
     private MaterialSpinner spProfessor;
     private Professor profSelecionado;
+    private Disciplina disciplina;
+    private List<Professor> professores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +55,23 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         profSelecionado = null;
 
         iniciaSpinners();
+
+        Intent iin = getIntent();
+
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            String nome = (String) b.get("nome");
+            disciplina = DisciplinaDAO.getByNome(nome);
+            popularCampos(disciplina);
+        } else {
+            disciplina = new Disciplina();
+        }
     }
 
     private void iniciaSpinners() {
         spProfessor = findViewById(R.id.spProfessor);
-        List<Professor> professores = ProfessorDAO.retornaProfessoresSemDisciplinas();
+        professores = ProfessorDAO.retornaProfessoresSemDisciplinas();
 
         spProfessor.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, professores));
@@ -61,7 +79,8 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
         spProfessor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i >= 0) {
+
+                if (professores.size()>0 && i >= 0) {
                     profSelecionado = professores.get(i);
                 }
             }
@@ -113,7 +132,6 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
     }
 
     public void salvarDisciplina() {
-        Disciplina disciplina = new Disciplina();
         disciplina.setCodigo(Integer.parseInt(edCodigoDisciplina.getText().toString()));
         disciplina.setNome(edNomeDisciplina.getText().toString());
         disciplina.setCargaHoraria(Integer.parseInt(edCargaHoraria.getText().toString()));
@@ -153,5 +171,13 @@ public class CadastroDisciplinaActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void popularCampos(Disciplina disciplina) {
+        edCodigoDisciplina.setText(String.valueOf(disciplina.getCodigo()));
+        edNomeDisciplina.setText(disciplina.getNome());
+        edCargaHoraria.setText(String.valueOf(disciplina.getCargaHoraria()));
+        Professor professor = ProfessorDAO.getProfessor(disciplina.getProfessor());
+        professores.add(professor);
+        spProfessor.setSelection(Integer.parseInt(disciplina.getProfessor().toString()));
     }
 }

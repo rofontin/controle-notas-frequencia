@@ -2,6 +2,7 @@ package com.example.controlenotasfrequencia.cadastroprofessor;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastroprofessor.dao.ProfessorDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Professor;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
@@ -40,6 +43,7 @@ public class CadastroProfessorActivity extends AppCompatActivity {
     private MaterialSpinner spTurma;
     private LinearLayout lnPrincipal;
     private Turma turmaSelecionada;
+    private Professor professor;
 
     private int vAno;
     private int vMes;
@@ -63,9 +67,21 @@ public class CadastroProfessorActivity extends AppCompatActivity {
         edDtAdesaoProfessor.setFocusable(false);
 
         edCpfProfessor.addTextChangedListener(CpfMask.insert(edCpfProfessor));
-        iniciaSpinners();
 
+        iniciaSpinners();
         setDataAtual();
+
+        Intent iin = getIntent();
+
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            String nome = (String) b.get("nome");
+            professor = ProfessorDAO.getByNome(nome);
+            popularCampos(professor);
+        } else {
+            professor = new Professor();
+        }
     }
 
     private void setDataAtual() {
@@ -142,7 +158,6 @@ public class CadastroProfessorActivity extends AppCompatActivity {
     }
 
     private void salvarProfessor() {
-        Professor professor = new Professor();
         professor.setRegistro(Integer.parseInt(edRegistroProfessor.getText().toString()));
         professor.setNome(edNomeProfessor.getText().toString());
         professor.setCpf(edCpfProfessor.getText().toString());
@@ -216,5 +231,14 @@ public class CadastroProfessorActivity extends AppCompatActivity {
         setDataAtual();
         return new DatePickerDialog(this, setDatePicker,
                 vAno, vMes, vDia);
+    }
+
+    private void popularCampos(Professor aluno) {
+        edRegistroProfessor.setText(String.valueOf(aluno.getRegistro()));
+        edNomeProfessor.setText(aluno.getNome());
+        edCpfProfessor.setText(aluno.getCpf());
+        edDtNascProfessor.setText(aluno.getDtNasc());
+        edDtAdesaoProfessor.setText(aluno.getDtAdesao());
+        spTurma.setSelection(Integer.parseInt(professor.getTurma().toString()));
     }
 }

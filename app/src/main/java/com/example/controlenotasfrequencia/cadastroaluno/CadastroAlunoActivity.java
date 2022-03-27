@@ -2,6 +2,7 @@ package com.example.controlenotasfrequencia.cadastroaluno;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,8 +32,6 @@ import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.CpfMask;
 import com.example.controlenotasfrequencia.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.Calendar;
 import java.util.List;
@@ -59,6 +58,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private int vMes;
     private int vDia;
     private View dataSelecionada;
+    private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,20 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         iniciaSpinners();
         setDataAtual();
+
+        Intent iin = getIntent();
+
+        Bundle b = iin.getExtras();
+
+        if (b != null) {
+            int ra = (int) b.get("ra");
+            aluno = AlunoDAO.getByRa(ra);
+            popularCampos(aluno);
+        } else {
+            aluno = new Aluno();
+        }
     }
+
 
     private void setDataAtual() {
         Calendar calendar = Calendar.getInstance();
@@ -90,9 +103,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     private void iniciaSpinners(){
-
         spDisciplina.setVisibility(View.GONE);
-
 
         List<Turma> turma = TurmaDAO.retornaTurmas("", new String[]{}, "descricao");
         List<Disciplina> disciplinas = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome");
@@ -104,7 +115,7 @@ public class CadastroAlunoActivity extends AppCompatActivity {
 
         spDisciplina.setAdapterWithOutImage(this, nomesDisciplinas, list -> this.disciplinas = list);
         spDisciplina.initMultiSpinner(this, spDisciplina);
-
+        spDisciplina.setHint("Disciplinas");
 
         spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -168,7 +179,6 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     }
 
     public void salvarAluno(){
-        Aluno aluno = new Aluno();
         aluno.setRa(Integer.parseInt(edRaAluno.getText().toString()));
         aluno.setNome(edNomeAluno.getText().toString());
         aluno.setCpf(edCpfAluno.getText().toString());
@@ -191,6 +201,8 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     private void salvaRelacionamentoAlunoDisciplina(long idAluno) {
         this.disciplinas.forEach(nome -> {
             Optional<Disciplina> disciplina = DisciplinaDAO.retornaDisciplina("nome = ?", nome).stream().findFirst();
+            List<AlunoDisciplina> alunoDisciplinaByAluno = AlunoDisciplinaDAO.getAlunoDisciplinaByAluno(idAluno);
+            AlunoDisciplinaDAO.deleteInBatch(alunoDisciplinaByAluno);
 
             if(disciplina.isPresent()){
                 AlunoDisciplina alunoDisciplina = new AlunoDisciplina(idAluno, disciplina.get().getId());
@@ -260,5 +272,14 @@ public class CadastroAlunoActivity extends AppCompatActivity {
         setDataAtual();
         return new DatePickerDialog(this, setDatePicker,
                 vAno, vMes, vDia);
+    }
+
+    private void popularCampos(Aluno aluno) {
+        edRaAluno.setText(String.valueOf(aluno.getRa()));
+        edNomeAluno.setText(aluno.getNome());
+        edCpfAluno.setText(aluno.getCpf());
+        edDtNascAluno.setText(aluno.getDtNasc());
+        edDtMatAluno.setText(aluno.getDtMatricula());
+        spTurma.setSelection(Integer.parseInt(aluno.getTurma().toString()));
     }
 }

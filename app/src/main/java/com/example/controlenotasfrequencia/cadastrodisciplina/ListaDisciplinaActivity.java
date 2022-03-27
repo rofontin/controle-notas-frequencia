@@ -15,16 +15,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlenotasfrequencia.R;
+import com.example.controlenotasfrequencia.cadastroaluno.CadastroAlunoActivity;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
 import com.example.controlenotasfrequencia.cadastrodisciplina.adapters.DisciplinaAdapter;
 import com.example.controlenotasfrequencia.cadastrodisciplina.dao.DisciplinaDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Disciplina;
 import com.example.controlenotasfrequencia.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaDisciplinaActivity extends AppCompatActivity {
+public class ListaDisciplinaActivity extends AppCompatActivity implements DisciplinaAdapter.OnDisciplinaListener  {
 
     private LinearLayout lnListaDisciplina;
+    private List<Disciplina> listaDisciplina = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +42,11 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
     }
 
     public void atualizaListaDisciplina() {
-        List<Disciplina> listaDisciplina = DisciplinaDAO.retornaDisciplina("", new String[]{}, "nome asc");
+        listaDisciplina = DisciplinaDAO.getAll("", new String[]{}, "codigo asc");
         Log.e("PHS", "Tamanho da lista: " + listaDisciplina.size());
 
         RecyclerView rvListaDisciplina = findViewById(R.id.rvListaDisciplina);
-        DisciplinaAdapter adapter = new DisciplinaAdapter(listaDisciplina, this);
+        DisciplinaAdapter adapter = new DisciplinaAdapter(listaDisciplina, this, this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaDisciplina.setLayoutManager(llm);
         rvListaDisciplina.setAdapter(adapter);
@@ -76,5 +81,12 @@ public class ListaDisciplinaActivity extends AppCompatActivity {
             Util.customSnackBar(lnListaDisciplina, "Disciplina salva com sucesso!", 1);
         }
         atualizaListaDisciplina();
+    }
+
+    @Override
+    public void onDisciplinalick(int position) {
+        Intent intent = new Intent(this, CadastroDisciplinaActivity.class);
+        intent.putExtra("nome", listaDisciplina.get(position).getNome());
+        startActivityForResult(intent, 1);
     }
 }

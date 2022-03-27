@@ -45,4 +45,5 @@ public class AlunoDisciplinaDAO {
             Log.e("Erro", "Erro ao apagar o aluno: " + ex.getMessage());
         }
     }
+
 }

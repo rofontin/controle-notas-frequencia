@@ -18,14 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.controlenotasfrequencia.R;
 import com.example.controlenotasfrequencia.cadastroTurma.adapters.TurmaAdapter;
 import com.example.controlenotasfrequencia.cadastroTurma.dao.TurmaDAO;
+import com.example.controlenotasfrequencia.cadastroaluno.CadastroAlunoActivity;
+import com.example.controlenotasfrequencia.cadastroaluno.dao.AlunoDAO;
+import com.example.controlenotasfrequencia.domain.Aluno;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.example.controlenotasfrequencia.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaTurmaActivity extends AppCompatActivity {
+public class ListaTurmaActivity extends AppCompatActivity  implements TurmaAdapter.OnTurmaListener {
 
     private LinearLayout lnLista;
+    private List<Turma> listaTurma = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +43,11 @@ public class ListaTurmaActivity extends AppCompatActivity {
     }
 
     public void atualizaListaTurma() {
-        List<Turma> listaTurma = TurmaDAO.retornaTurmas("", new String[]{}, "codigo asc");
+        listaTurma = TurmaDAO.getAll("", new String[]{}, "codigo asc");
         Log.e("PHS", "Tamanho da lista: " + listaTurma.size());
 
         RecyclerView rvListaTurma = findViewById(R.id.rvListaTurma);
-        TurmaAdapter adapter = new TurmaAdapter(listaTurma, this);
+        TurmaAdapter adapter = new TurmaAdapter(listaTurma, this,this);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvListaTurma.setLayoutManager(llm);
         rvListaTurma.setAdapter(adapter);
@@ -84,5 +89,12 @@ public class ListaTurmaActivity extends AppCompatActivity {
 //        Aluno aluno = AlunoDAO.getAluno(1L);
 //        AlunoDAO.delete(aluno);
         atualizaListaTurma();
+    }
+
+    @Override
+    public void onTurmaClick(int position) {
+        Intent intent = new Intent(this, CadastroTurmaActivity.class);
+        intent.putExtra("codigo", listaTurma.get(position).getCodigo());
+        startActivityForResult(intent, 1);
     }
 }

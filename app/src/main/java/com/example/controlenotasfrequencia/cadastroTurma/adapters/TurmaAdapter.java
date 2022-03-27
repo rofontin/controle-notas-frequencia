@@ -26,10 +26,12 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
 
     private final List<Turma> listaTurma;
     private Context context;
+    private OnTurmaListener mOnTurmaListener;
 
-    public TurmaAdapter(List<Turma> listaTurma, Context context) {
+    public TurmaAdapter(List<Turma> listaTurma, Context context, OnTurmaListener onTurmaListener) {
         this.listaTurma = listaTurma;
         this.context = context;
+        this.mOnTurmaListener = onTurmaListener;
     }
 
     public void delete(int position){
@@ -37,7 +39,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         notifyItemRemoved(position);
     }
 
-    public static class TurmaViewHolder extends RecyclerView.ViewHolder {
+    public static class TurmaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextInputEditText edCodigo;
         TextInputEditText edDescricao;
         TextInputEditText edTurno;
@@ -47,8 +49,12 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         TextInputEditText edDtTermino;
         Button deletar;
 
-        public TurmaViewHolder(@NonNull View itemView) {
+        OnTurmaListener onTurmaListener;
+
+        public TurmaViewHolder(@NonNull View itemView, OnTurmaListener onTurmaListener) {
             super(itemView);
+
+
 
             edCodigo = itemView.findViewById(R.id.edCodigoTurma);
             edDescricao = itemView.findViewById(R.id.edDescricaoTurma);
@@ -58,7 +64,27 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
             edDtInicio = itemView.findViewById(R.id.edDtInicioTurma);
             edDtTermino = itemView.findViewById(R.id.edDtTerminoTurma);
             deletar = itemView.findViewById(R.id.deletar);
+
+            this.onTurmaListener = onTurmaListener;
+
+            itemView.setOnClickListener(this);
+
+            edCodigo.setOnClickListener(this);
+            edDescricao.setOnClickListener(this);
+            edTurno.setOnClickListener(this);
+            edRegime.setOnClickListener(this);
+            edPeriodo.setOnClickListener(this);
+            edDtInicio.setOnClickListener(this);
+            edDtTermino.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) { onTurmaListener.onTurmaClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnTurmaListener{
+        void onTurmaClick(int position);
     }
 
     @Override
@@ -66,7 +92,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.TurmaViewHol
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_turma, parent, false);
 
-        return new TurmaViewHolder(view);
+        return new TurmaViewHolder(view, mOnTurmaListener);
     }
 
     @Override
