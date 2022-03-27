@@ -30,7 +30,11 @@ public class ListaAlunoActivity extends AppCompatActivity implements AlunoAdapte
 
     private RecyclerView rvListaAlunos;
     private LinearLayout lnLista;
+<<<<<<< Updated upstream
     private List<Aluno> listaAluno = new ArrayList<>();
+=======
+    private ArrayList<Aluno> listaAluno = new ArrayList<>();
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +92,17 @@ public class ListaAlunoActivity extends AppCompatActivity implements AlunoAdapte
         atualizaListaAluno();
     }
 
+<<<<<<< Updated upstream
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onAlunoClick(int position) {
         Intent intent = new Intent(this, CadastroAlunoActivity.class);
         intent.putExtra("ra", listaAluno.get(position).getRa());
         startActivityForResult(intent, 1);
+=======
+    @Override
+    public void onAlunoClick(int position) {
+
+>>>>>>> Stashed changes
     }
 }

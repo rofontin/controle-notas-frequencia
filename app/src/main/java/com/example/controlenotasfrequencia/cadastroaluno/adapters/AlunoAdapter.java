@@ -25,13 +25,18 @@ import com.example.controlenotasfrequencia.domain.NotasFrequencia;
 import com.example.controlenotasfrequencia.domain.Turma;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHolder> {
 
     private final List<Aluno> listaAlunos;
     private Context context;
+<<<<<<< Updated upstream
     private OnAlunoListener mOnAlunoListener;
+=======
+    private ArrayList<Aluno> listaAluno = new ArrayList<>();
+>>>>>>> Stashed changes
 
     public AlunoAdapter(List<Aluno> listaAlunos, OnAlunoListener onAlunoListener, Context context) {
         this.listaAlunos = listaAlunos;
@@ -53,6 +58,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         TextInputEditText edDtNasc;
         Button deletar;
         CardView cardAluno;
+        OnAlunoListener onAlunoListener;
 
         OnAlunoListener onAlunoListener;
 
@@ -69,6 +75,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             edDtMatricula = itemView.findViewById(R.id.edDtMatricula);
             edDtNasc = itemView.findViewById(R.id.edDtNascAluno);
             deletar = itemView.findViewById(R.id.deletar);
+<<<<<<< Updated upstream
 
             edRaAluno.setOnClickListener(this);
             edNomeAluno.setOnClickListener(this);
@@ -77,13 +84,22 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
             edDtMatricula.setOnClickListener(this);
             edDtNasc.setOnClickListener(this);
 
+=======
+            cardAluno = itemView.findViewById(R.layout.card_view_aluno);
+            this.onAlunoListener = onAlunoListener;
+
+>>>>>>> Stashed changes
             itemView.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
+<<<<<<< Updated upstream
             onAlunoListener.onAlunoClick(getAdapterPosition());
+=======
+            onAlunoListener.onAlunoClick(getAdapterPosition() );
+>>>>>>> Stashed changes
         }
     }
 
@@ -136,5 +152,8 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
         void onAlunoClick(int position);
     }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }
